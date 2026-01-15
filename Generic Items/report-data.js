@@ -15,7 +15,7 @@ window.REPORT_DATA = {
     // ======================
     meta: {
         // REQUIRED: API Information
-        apiName: "Catalog - Generic Items API",
+        apiName: "Catalog/Generic Items",
         folderName: "catalog_generic_items",
         isTemplate: false,
         baseUrl: "https://admin-backend.gazzertest.cloud/api",

@@ -1,0 +1,1005 @@
+{
+	"info": {
+		"_postman_id": "89de6a13-f472-4329-8969-0cece926b4df",
+		"name": "Catalog APIs",
+		"description": "API collection for Catalog module with complete data examples\n\nGenerated: 2026-01-13 18:14:14\nUpdated: 2026-01-13",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-89de6a13-f472-4329-8969-0cece926b4df?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Generic Items",
+			"item": [
+				{
+					"name": "Get All Items (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/items?per_page=15&search=&item_category_id=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"items"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by item name or barcode"
+								},
+								{
+									"key": "item_category_id",
+									"value": "",
+									"description": "Filter by item category ID"
+								}
+							]
+						},
+						"description": "Get all generic items with pagination and filters (admin endpoint)\n\n**Method:** getAllItems\n\n**Query Parameters:**\n- per_page: Items per page (default: 15)\n- search: Search by generic_item_name, generic_item_name_ar, or barcode\n- item_category_id: Filter by item category ID\n\n**Response:** Returns paginated collection with:\n- id\n- generic_item_name (localized)\n- generic_item_name_en\n- generic_item_name_ar\n- item_category_id\n- parent_generic_item_id\n- image\n- low_stock_alert\n- expiry_alert_in_days\n- barcode\n- item_category (relationship)\n- created_at\n- updated_at"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item by ID (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/items/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"items",
+								"1"
+							]
+						},
+						"description": "Get a specific generic item by ID (admin endpoint)\n\n**Method:** getItem\n\n**Response:** Returns item with all fields and item_category relationship"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "generic_item_name",
+									"value": "Apple iPhone 15",
+									"type": "text"
+								},
+								{
+									"key": "generic_item_name_ar",
+									"value": "آيفون 15",
+									"type": "text"
+								},
+								{
+									"key": "item_category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "parent_generic_item_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/dell/Downloads/WhatsApp Image 2025-12-11 at 4.02.30 PM.jpeg"
+								},
+								{
+									"key": "low_stock_alert",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "expiry_alert_in_days",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "barcode",
+									"value": "123456789012",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"items"
+							]
+						},
+						"description": "Create a new generic item\n\n**Method:** createItem\n\n**Required Fields:**\n- generic_item_name: Item name in English (max: 50)\n- generic_item_name_ar: Item name in Arabic (max: 50)\n- item_category_id: Item category ID (must exist)\n\n**Optional Fields:**\n- parent_generic_item_id: Parent generic item ID\n- image: Image path/URL (max: 255)\n- low_stock_alert: Low stock alert threshold (integer, min: 0)\n- expiry_alert_in_days: Expiry alert in days (integer, min: 0)\n- barcode: Barcode (must be unique, max: 255)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "generic_item_name",
+									"value": "Apple iPhone 15 Pro",
+									"type": "text"
+								},
+								{
+									"key": "generic_item_name_ar",
+									"value": "آيفون 15 برو",
+									"type": "text"
+								},
+								{
+									"key": "item_category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "parent_generic_item_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "low_stock_alert",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "expiry_alert_in_days",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "barcode",
+									"value": "1234567890124",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "put",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/items/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"items",
+								"1"
+							]
+						},
+						"description": "Update an existing generic item\n\n**Method:** updateItem\n\n**Fields:**\n- generic_item_name: Item name in English\n- generic_item_name_ar: Item name in Arabic\n- item_category_id: Item category ID\n- parent_generic_item_id: Parent generic item ID\n- image: Image path/URL\n- low_stock_alert: Low stock alert threshold\n- expiry_alert_in_days: Expiry alert in days\n- barcode: Barcode (must be unique)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/items/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"items",
+								"1"
+							]
+						},
+						"description": "Delete a generic item (soft delete)\n\n**Method:** deleteItem\n\n**Note:** This performs a soft delete"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item Categories",
+			"item": [
+				{
+					"name": "Get All Categories (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories?per_page=15&parent_item_category_id=&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "parent_item_category_id",
+									"value": "",
+									"description": "Filter by parent category ID (use 'null' for root categories)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by category name"
+								}
+							]
+						},
+						"description": "Get all item categories with pagination and filters (admin endpoint)\n\n**Method:** getAllCategories\n\n**Query Parameters:**\n- per_page: Items per page (default: 15)\n- parent_item_category_id: Filter by parent category ID (use 'null' for root categories)\n- search: Search by category_name or category_name_ar\n\n**Response:** Returns paginated collection with all category fields"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories/{category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories",
+								"{category_id}"
+							],
+							"variable": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Get a specific item category by ID (admin endpoint)\n\n**Method:** getCategory\n\n**Response:** Returns category with all fields"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categories by Store Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories/store-category/{store_category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories",
+								"store-category",
+								"{store_category_id}"
+							],
+							"variable": [
+								{
+									"key": "store_category_id",
+									"value": "1",
+									"description": "Store Category ID"
+								}
+							]
+						},
+						"description": "Get item categories for a specific store category (root categories only)\n\n**Method:** getItemCategories\n\n**Note:** The store_category_id parameter is accepted for backward compatibility but no longer filters results.\n\n**Response:** Returns collection of root categories (parent_item_category_id is null)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\": \"Electronics\",\n    \"category_name_ar\": \"إلكترونيات\",\n    \"parent_item_category_id\": null,\n    \"image\": null,\n    \"layout\": \"vertical\",\n    \"card_style\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories"
+							]
+						},
+						"description": "Create a new item category\n\n**Method:** createCategory\n\n**Required Fields:**\n- category_name: Category name in English (max: 50)\n- category_name_ar: Category name in Arabic (max: 50)\n\n**Optional Fields:**\n- parent_item_category_id: Parent category ID (null for root categories)\n- image: Image path/URL (max: 255)\n- layout: 'vertical' or 'horizontal' (default: 'vertical')\n- card_style: Card style string (max: 200)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\": \"Electronics Updated\",\n    \"category_name_ar\": \"إلكترونيات محدثة\",\n    \"parent_item_category_id\": null,\n    \"image\": null,\n    \"layout\": \"horizontal\",\n    \"card_style\": \"modern\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories/{category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories",
+								"{category_id}"
+							],
+							"variable": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Update an existing item category\n\n**Method:** updateCategory\n\n**Fields:**\n- category_name: Category name in English\n- category_name_ar: Category name in Arabic\n- parent_item_category_id: Parent category ID\n- image: Image path/URL\n- layout: 'vertical' or 'horizontal'\n- card_style: Card style string"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-categories/{category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-categories",
+								"{category_id}"
+							],
+							"variable": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Delete an item category (soft delete)\n\n**Method:** deleteCategory\n\n**Note:** This performs a soft delete"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item Sub-Categories",
+			"item": [
+				{
+					"name": "Get All Sub-Categories (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories?per_page=15&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by category name"
+								}
+							]
+						},
+						"description": "Get all item sub-categories with pagination and filters (admin endpoint)\n\n**Method:** getAllSubCategories\n\n**Query Parameters:**\n- per_page: Items per page (default: 15)\n- search: Search by category_name or category_name_ar\n\n**Response:** Returns paginated collection of sub-categories (categories with parent_item_category_id)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sub-Category by ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories/{sub_category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories",
+								"{sub_category_id}"
+							],
+							"variable": [
+								{
+									"key": "sub_category_id",
+									"value": "1",
+									"description": "Sub-Category ID"
+								}
+							]
+						},
+						"description": "Get a specific item sub-category by ID (admin endpoint)\n\n**Method:** getSubCategory\n\n**Response:** Returns sub-category with all fields"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sub-Categories by Store Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories/store-category/{store_category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories",
+								"store-category",
+								"{store_category_id}"
+							],
+							"variable": [
+								{
+									"key": "store_category_id",
+									"value": "1",
+									"description": "Store Category ID"
+								}
+							]
+						},
+						"description": "Get item sub-categories for a specific store category\n\n**Method:** getItemSubCategories\n\n**Note:** The store_category_id parameter is accepted for backward compatibility but no longer filters results.\n\n**Response:** Returns collection of sub-categories (categories with parent_item_category_id)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sub-Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\": \"Smartphones\",\n    \"category_name_ar\": \"هواتف ذكية\",\n    \"parent_item_category_id\": 1,\n    \"image\": null,\n    \"layout\": \"vertical\",\n    \"card_style\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories"
+							]
+						},
+						"description": "Create a new item sub-category\n\n**Method:** createSubCategory\n\n**Required Fields:**\n- category_name: Category name in English (max: 50)\n- category_name_ar: Category name in Arabic (max: 50)\n- parent_item_category_id: Parent category ID (required for sub-categories, must exist)\n\n**Optional Fields:**\n- image: Image path/URL (max: 255)\n- layout: 'vertical' or 'horizontal' (default: 'vertical')\n- card_style: Card style string (max: 200)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sub-Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\": \"Smartphones Updated\",\n    \"category_name_ar\": \"هواتف ذكية محدثة\",\n    \"parent_item_category_id\": 1,\n    \"image\": null,\n    \"layout\": \"horizontal\",\n    \"card_style\": \"modern\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories/{sub_category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories",
+								"{sub_category_id}"
+							],
+							"variable": [
+								{
+									"key": "sub_category_id",
+									"value": "1",
+									"description": "Sub-Category ID"
+								}
+							]
+						},
+						"description": "Update an existing item sub-category\n\n**Method:** updateSubCategory\n\n**Fields:**\n- category_name: Category name in English\n- category_name_ar: Category name in Arabic\n- parent_item_category_id: Parent category ID\n- image: Image path/URL\n- layout: 'vertical' or 'horizontal'\n- card_style: Card style string"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sub-Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/item-sub-categories/{sub_category_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"item-sub-categories",
+								"{sub_category_id}"
+							],
+							"variable": [
+								{
+									"key": "sub_category_id",
+									"value": "1",
+									"description": "Sub-Category ID"
+								}
+							]
+						},
+						"description": "Delete an item sub-category (soft delete)\n\n**Method:** deleteSubCategory\n\n**Note:** This performs a soft delete"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog Configuration",
+			"item": [
+				{
+					"name": "Get Configuration",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/configuration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"configuration"
+							]
+						},
+						"description": "Get catalog configuration\n\n**Method:** getConfiguration"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Configuration",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"default_layout\": \"vertical\",\n    \"default_card_style\": null,\n    \"low_stock_alert_enabled\": true,\n    \"expiry_alert_enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/catalog/configuration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"configuration"
+							]
+						},
+						"description": "Update catalog configuration\n\n**Method:** updateConfiguration\n\n**Optional Fields:**\n- default_layout: 'vertical' or 'horizontal' (default: 'vertical')\n- default_card_style: Card style string (max: 200)\n- low_stock_alert_enabled: Boolean (default: true)\n- expiry_alert_enabled: Boolean (default: true)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/catalog/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"statistics"
+							]
+						},
+						"description": "Get catalog statistics\n\n**Method:** getStatistics\n\n**Response:** Returns statistics including:\n- total_items: Total number of generic items\n- total_categories: Total number of root categories\n- total_sub_categories: Total number of sub-categories\n- items_by_category: Count of items grouped by category\n- categories_with_items: Number of categories that have items\n- items_with_low_stock_alert: Number of items with low stock alerts\n- items_with_expiry_alert: Number of items with expiry alerts"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

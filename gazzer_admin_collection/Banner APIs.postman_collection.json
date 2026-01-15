@@ -1,0 +1,631 @@
+{
+	"info": {
+		"_postman_id": "02bc1fa7-5e97-4baa-89fa-25c9aeeb837a",
+		"name": "Banner APIs",
+		"description": "API collection for Banner module\n\nGenerated: 2026-01-13 20:00:00",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-02bc1fa7-5e97-4baa-89fa-25c9aeeb837a?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Get All Banners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/banners",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"banners"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Items per page",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query (searches in title and title_ar)",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "Sort field (created_at, updated_at, title, etc.)",
+							"disabled": true
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "Sort direction (asc/desc)",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "",
+							"description": "Filter by banner type (Image, Detailed, SliderVertical, SliderHorizontal, Countdown, Shaking)",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "",
+							"description": "Filter by page (home, store_category, store, product, restaurant, plate_category, plate, restaurants_page)",
+							"disabled": true
+						},
+						{
+							"key": "is_for_restaurant",
+							"value": "",
+							"description": "Filter by restaurant flag (true/false)",
+							"disabled": true
+						},
+						{
+							"key": "expired_status",
+							"value": "",
+							"description": "Filter by expired status (active/expired)",
+							"disabled": true
+						},
+						{
+							"key": "bannerable_type",
+							"value": "",
+							"description": "Filter by bannerable type (Store, Plate, Category, PlateCategory, StoreCategory, Product, Restaurant)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@index\n\n**Method:** index\n\nGet all banners with optional filters and pagination."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Banner By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/banners/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"banners",
+						"1"
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@show\n\n**Method:** show\n\nGet a single banner by ID with bannerable and targetable relationships."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Banner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "Image",
+							"description": "Required. Banner type: Image, Detailed, SliderVertical, SliderHorizontal, Countdown, Shaking",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Summer Sale Banner",
+							"description": "Banner title (English)",
+							"type": "text"
+						},
+						{
+							"key": "title_ar",
+							"value": "بانر تخفيضات الصيف",
+							"description": "Banner title (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "subtitle",
+							"value": "Get up to 50% off on selected items",
+							"description": "Banner subtitle (English)",
+							"type": "text"
+						},
+						{
+							"key": "subtitle_ar",
+							"value": "احصل على خصم يصل إلى 50% على المنتجات المختارة",
+							"description": "Banner subtitle (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "Banner image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/WhatsApp Image 2025-12-11 at 4.02.30 PM.jpeg"
+						},
+						{
+							"key": "background_color",
+							"value": "#FF5733",
+							"description": "Background color in hex format (e.g., #FF5733)",
+							"type": "text"
+						},
+						{
+							"key": "background_image",
+							"description": "Background image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/WhatsApp Image 2025-12-11 at 4.02.30 PM.jpeg"
+						},
+						{
+							"key": "foreground_image",
+							"description": "Foreground image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/WhatsApp Image 2025-12-11 at 4.02.30 PM.jpeg"
+						},
+						{
+							"key": "x_axis",
+							"value": "10.50",
+							"description": "X-axis position (decimal)",
+							"type": "text"
+						},
+						{
+							"key": "y_axis",
+							"value": "20.75",
+							"description": "Y-axis position (decimal)",
+							"type": "text"
+						},
+						{
+							"key": "expired_at",
+							"value": "2026-12-31 23:59:59",
+							"description": "Expiration date and time (Y-m-d H:i:s format)",
+							"type": "text"
+						},
+						{
+							"key": "is_animated",
+							"value": "1",
+							"description": "Whether banner is animated (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "button_displayed",
+							"value": "1",
+							"description": "Whether button is displayed (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "button_text",
+							"value": "Shop Now",
+							"description": "Button text (English)",
+							"type": "text"
+						},
+						{
+							"key": "button_text_ar",
+							"value": "تسوق الآن",
+							"description": "Button text (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "discount_percent",
+							"value": "50",
+							"description": "Discount percentage (0-100)",
+							"type": "text"
+						},
+						{
+							"key": "bannerable_type",
+							"value": "Store",
+							"description": "Polymorphic relationship type: Store, Plate, Category, PlateCategory, StoreCategory, Product, Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "bannerable_id",
+							"value": "1",
+							"description": "Polymorphic relationship ID",
+							"type": "text"
+						},
+						{
+							"key": "targetable_type",
+							"value": "Product",
+							"description": "Target entity type: Store, Plate, Category, PlateCategory, StoreCategory, Product, Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "targetable_id",
+							"value": "1",
+							"description": "Target entity ID",
+							"type": "text"
+						},
+						{
+							"key": "is_for_restaurant",
+							"value": "0",
+							"description": "Whether banner is for restaurant (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "page",
+							"value": "home",
+							"description": "Page where banner appears: home, store_category, store, product, restaurant, plate_category, plate, restaurants_page",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/banners",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"banners"
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@store\n\n**Method:** store\n\nCreate a new banner. Type is required. All other fields are optional."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Banner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "Detailed",
+							"description": "Banner type: Image, Detailed, SliderVertical, SliderHorizontal, Countdown, Shaking",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Updated Summer Sale Banner",
+							"description": "Banner title (English)",
+							"type": "text"
+						},
+						{
+							"key": "title_ar",
+							"value": "بانر تخفيضات الصيف المحدث",
+							"description": "Banner title (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "subtitle",
+							"value": "Updated subtitle",
+							"description": "Banner subtitle (English)",
+							"type": "text"
+						},
+						{
+							"key": "subtitle_ar",
+							"value": "عنوان فرعي محدث",
+							"description": "Banner subtitle (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "Banner image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/_Baahir El Marwan __ Midwest.jpeg"
+						},
+						{
+							"key": "background_color",
+							"value": "#00FF00",
+							"description": "Background color in hex format",
+							"type": "text"
+						},
+						{
+							"key": "background_image",
+							"description": "Background image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/77bebba3-b7df-460c-bff1-1b9ce3c4e518.jpeg"
+						},
+						{
+							"key": "foreground_image",
+							"description": "Foreground image file (optional)",
+							"type": "file",
+							"src": "/C:/Users/dell/Downloads/77bebba3-b7df-460c-bff1-1b9ce3c4e518.jpeg"
+						},
+						{
+							"key": "x_axis",
+							"value": "15.25",
+							"description": "X-axis position (decimal)",
+							"type": "text"
+						},
+						{
+							"key": "y_axis",
+							"value": "30.50",
+							"description": "Y-axis position (decimal)",
+							"type": "text"
+						},
+						{
+							"key": "expired_at",
+							"value": "2027-01-31 23:59:59",
+							"description": "Expiration date and time (Y-m-d H:i:s format)",
+							"type": "text"
+						},
+						{
+							"key": "is_animated",
+							"value": "0",
+							"description": "Whether banner is animated (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "button_displayed",
+							"value": "0",
+							"description": "Whether button is displayed (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "button_text",
+							"value": "Learn More",
+							"description": "Button text (English)",
+							"type": "text"
+						},
+						{
+							"key": "button_text_ar",
+							"value": "اعرف المزيد",
+							"description": "Button text (Arabic)",
+							"type": "text"
+						},
+						{
+							"key": "discount_percent",
+							"value": "30",
+							"description": "Discount percentage (0-100)",
+							"type": "text"
+						},
+						{
+							"key": "bannerable_type",
+							"value": "Restaurant",
+							"description": "Polymorphic relationship type",
+							"type": "text"
+						},
+						{
+							"key": "bannerable_id",
+							"value": "2",
+							"description": "Polymorphic relationship ID",
+							"type": "text"
+						},
+						{
+							"key": "targetable_type",
+							"value": "Plate",
+							"description": "Target entity type",
+							"type": "text"
+						},
+						{
+							"key": "targetable_id",
+							"value": "2",
+							"description": "Target entity ID",
+							"type": "text"
+						},
+						{
+							"key": "is_for_restaurant",
+							"value": "1",
+							"description": "Whether banner is for restaurant (true/false)",
+							"type": "text"
+						},
+						{
+							"key": "page",
+							"value": "restaurants_page",
+							"description": "Page where banner appears",
+							"type": "text"
+						},
+						{
+							"key": "_method",
+							"value": "put",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/banners/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"banners",
+						"1"
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@update\n\n**Method:** update\n\nUpdate an existing banner. All fields are optional."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Banner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/banners/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"banners",
+						"1"
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@destroy\n\n**Method:** destroy\n\nDelete a banner by ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Banner Statistics",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/banners/statistics/overview",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"banners",
+						"statistics",
+						"overview"
+					]
+				},
+				"description": "Modules\\Banner\\Http\\Controllers\\BannerController@getStatistics\n\n**Method:** getStatistics\n\nGet banner statistics including:\n- Total banners count\n- Active banners count\n- Expired banners count\n- Restaurant banners count\n- Animated banners count\n- Banners grouped by type\n- Banners grouped by page"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

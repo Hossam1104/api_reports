@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazzer API Test Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- CRITICAL SCRIPT LOAD ORDER (SIMPLIFIED) -->
+    <!-- 1. report-data.js - Unified data source -->
+    <!-- 2. script.js - Main logic (reads report-data.js) -->
+    <!-- Dashboard reads window.REPORT_SUMMARY after all scripts load -->
+</head>
+
+<body>
+    <!-- ADDED: Layout container for consistent padding -->
+    <div class="layout-container">
+        <div class="container">
+            <!-- Enhanced Header -->
+            <header>
+                <div class="header-content">
+                    <div class="header-title">
+                        <h1><i class="fas fa-bug"></i> API Test Report - <span id="apiNamePlaceholder">API Name</span>
+                        </h1>
+                        <div class="subtitle" id="reportSubtitlePlaceholder">
+                            <i class="fas fa-chart-line"></i>
+                            Comprehensive quality assessment report
+                        </div>
+                    </div>
+                    <div class="report-meta">
+                        <div class="meta-item">
+                            <span class="meta-value" id="passedTests">0</span>
+                            <span class="meta-label">
+                                <i class="fas fa-check-circle"></i> Passed Tests
+                            </span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-value" id="failedTests">0</span>
+                            <span class="meta-label">
+                                <i class="fas fa-times-circle"></i> Failed Tests
+                            </span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-value" id="criticalBugs">0</span>
+                            <span class="meta-label">
+                                <i class="fas fa-exclamation-triangle"></i> Critical Bugs
+                            </span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-value" id="totalTests">0</span>
+                            <span class="meta-label">
+                                <i class="fas fa-vial"></i> Total Test Cases
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Compact Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--success-color);" id="passedStats">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-check-circle"></i> Tests Passed
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--danger-color);" id="failedStats">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-times-circle"></i> Tests Failed
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--warning-color);" id="skippedStats">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-clock"></i> Tests Skipped
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="successRate">0%</div>
+                    <div class="stat-label">
+                        <i class="fas fa-percentage"></i> Success Rate
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact API Info -->
+            <div class="api-info">
+                <h3><i class="fas fa-network-wired"></i> API Details</h3>
+                <div class="api-info-grid">
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-signature"></i> API Name
+                        </div>
+                        <div class="api-info-value" id="apiName">Not Specified</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-link"></i> Base URL
+                        </div>
+                        <div class="api-info-value" id="baseUrl">Not Specified</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-server"></i> Environment
+                        </div>
+                        <div class="api-info-value" id="environment">Not Specified</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-key"></i> Authentication
+                        </div>
+                        <div class="api-info-value" id="authentication">Not Specified</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-calendar-alt"></i> Test Date
+                        </div>
+                        <div class="api-info-value" id="testDate">Not Specified</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-user-tie"></i> Executed By
+                        </div>
+                        <div class="api-info-value">
+                            <strong>Hossam Mohamed</strong><br>
+                            <span style="color: rgba(255,255,255,0.8);">Senior Software QA Engineer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Dashboard Charts -->
+            <div class="dashboard">
+                <div class="chart-container">
+                    <canvas id="testStatusChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="severityChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Enhanced Bugs Section -->
+            <h2 class="section-title hidden-when-empty" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                Bugs to be Solved
+                <span class="section-subtitle" id="bug-summary-subtitle"></span>
+            </h2>
+
+            <div class="bugs-section" style="display: none;">
+                <!-- Bug Statistics Bar -->
+                <div class="bugs-grid hidden-when-empty">
+                    <div class="bug-stat">
+                        <span class="bug-priority p0">
+                            <span class="bug-priority-indicator p0"></span>
+                            P0 (Critical):
+                        </span>
+                        <span id="p0-bug-count">0</span>
+                    </div>
+                    <div class="bug-stat">
+                        <span class="bug-priority p1">
+                            <span class="bug-priority-indicator p1"></span>
+                            P1 (High):
+                        </span>
+                        <span id="p1-bug-count">0</span>
+                    </div>
+                    <div class="bug-stat">
+                        <span class="bug-priority p2">
+                            <span class="bug-priority-indicator p2"></span>
+                            P2 (Medium):
+                        </span>
+                        <span id="p2-bug-count">0</span>
+                    </div>
+                    <div class="bug-stat">
+                        <span class="bug-priority p3">
+                            <span class="bug-priority-indicator p3"></span>
+                            P3 (Low):
+                        </span>
+                        <span id="p3-bug-count">0</span>
+                    </div>
+                    <div class="bug-stat">
+                        <span style="font-weight: bold;">
+                            <i class="fas fa-bug"></i> Total Bugs:
+                        </span>
+                        <span id="total-bug-count">0</span>
+                    </div>
+                </div>
+
+                <button class="toggle-all hidden-when-empty" id="toggleAllBugsBtn" style="display: none;">
+                    <i class="fas fa-expand-alt"></i> Expand All Bug Details
+                </button>
+
+                <div class="bugs-grid" id="bugs-grid">
+                    <!-- Bugs will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Enhanced Test Cases Section -->
+            <h2 class="section-title">
+                <i class="fas fa-vial"></i>
+                Test Cases (<span id="totalTestsTitle">0</span> total)
+            </h2>
+
+            <!-- Enhanced Filters -->
+            <div class="filters hidden-when-empty" style="display: none;">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i> All Tests (<span id="allTestsCount">0</span>)
+                </button>
+                <button class="filter-btn" data-filter="passed">
+                    <i class="fas fa-check-circle"></i> Passed (<span id="passedCount">0</span>)
+                </button>
+                <button class="filter-btn" data-filter="failed">
+                    <i class="fas fa-times-circle"></i> Failed (<span id="failedCount">0</span>)
+                </button>
+                <button class="filter-btn" data-filter="skipped">
+                    <i class="fas fa-clock"></i> Skipped (<span id="skippedCount">0</span>)
+                </button>
+                <button class="filter-btn" data-filter="critical">
+                    <i class="fas fa-exclamation-triangle"></i> Critical (<span id="criticalCount">0</span>)
+                </button>
+                <button class="filter-btn" data-filter="create">
+                    <i class="fas fa-plus-circle"></i> CREATE
+                </button>
+                <button class="filter-btn" data-filter="read">
+                    <i class="fas fa-eye"></i> READ
+                </button>
+                <button class="filter-btn" data-filter="update">
+                    <i class="fas fa-edit"></i> UPDATE
+                </button>
+                <button class="filter-btn" data-filter="delete">
+                    <i class="fas fa-trash-alt"></i> DELETE
+                </button>
+                <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search test cases...">
+            </div>
+
+            <button class="toggle-all hidden-when-empty" id="toggleAllBtn" style="display: none;">
+                <i class="fas fa-expand-alt"></i> Expand All Test Details
+            </button>
+
+            <div class="test-cases-container" id="test-cases-container">
+                <!-- Test cases will be rendered here -->
+            </div>
+
+            <!-- Enhanced Test Data Section -->
+            <h2 class="section-title"><i class="fas fa-database"></i> Test Data</h2>
+            <div class="card">
+                <div class="api-info-grid">
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-database"></i> Test Data Source
+                        </div>
+                        <div class="api-info-value" id="testDataSource">Not Configured</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-file-csv"></i> Data Format
+                        </div>
+                        <div class="api-info-value" id="dataFormat">JSON</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-hashtag"></i> Test Data Records
+                        </div>
+                        <div class="api-info-value" id="dataRecords">0</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-history"></i> Last Data Update
+                        </div>
+                        <div class="api-info-value" id="dataUpdateDate">Not Updated</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Critical Issues Section -->
+            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Critical Issues Summary</h2>
+            <div class="security-vulnerabilities">
+                <ul id="criticalIssuesList" style="list-style: none; padding: 0;">
+                    <li
+                        style="padding: 1rem; background: #f8d7da; border-left: 4px solid #dc3545; margin-bottom: 0.5rem; border-radius: 4px;">
+                        <i class="fas fa-info-circle"></i> No critical issues identified
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Enhanced QA Conclusion -->
+            <div class="conclusion">
+                <h2><i class="fas fa-clipboard-check"></i> QA Conclusion</h2>
+
+                <div class="verdict" id="apiStabilityVerdict">
+                    <i class="fas fa-question-circle"></i> API STABILITY: Not Assessed
+                </div>
+
+                <h3 style="color: var(--primary-color); margin: 1.5rem 0;">
+                    <i class="fas fa-rocket"></i> Release Readiness:
+                    <span id="releaseReadiness" style="color: var(--danger-color);">Not Determined</span>
+                </h3>
+
+                <div class="conclusion-grid" id="conclusionGrid">
+                    <div class="conclusion-card info">
+                        <h4><i class="fas fa-info-circle"></i> Report Status</h4>
+                        <p>This is a generic API test report template. No specific testing data has been loaded.</p>
+                    </div>
+                </div>
+
+                <!-- Enhanced Recommendations -->
+                <div style="margin: 2rem 0;">
+                    <h4><i class="fas fa-list-check"></i> Backend Recommendations:</h4>
+                    <ol id="backendRecommendations" style="padding-left: 1.5rem;">
+                        <li>Populate this report with actual test results</li>
+                        <li>Review API documentation for completeness</li>
+                    </ol>
+                </div>
+
+                <!-- Enhanced Critical Issues Summary -->
+                <div
+                    style="margin: 2rem 0; padding: 1.5rem; background: #fff5f5; border-radius: 12px; border-left: 4px solid var(--danger-color);">
+                    <h4 style="color: var(--danger-color); margin-top: 0;">
+                        <i class="fas fa-fire"></i> 🚨 Critical Issues Summary
+                    </h4>
+                    <div id="criticalIssuesSummary" style="line-height: 1.6;">
+                        No critical issues have been reported. The system appears stable based on available data.
+                    </div>
+                </div>
+
+                <p
+                    style="font-style: italic; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border-color); color: var(--text-secondary);">
+                    <i class="fas fa-robot"></i> Report generated by Enterprise QA Automation System on
+                    <span id="generationDate">[GENERATION_DATE]</span>
+                </p>
+            </div>
+
+            <!-- Enhanced Recommendations -->
+            <h2 class="section-title"><i class="fas fa-tasks"></i> Recommendations</h2>
+            <div class="recommendations-grid">
+                <div class="recommendation-card" style="border-top-color: var(--danger-color);">
+                    <h3><i class="fas fa-exclamation-circle"></i> Immediate Actions</h3>
+                    <ul id="immediateActions">
+                        <li>Load test results into this report</li>
+                        <li>Validate API endpoint configurations</li>
+                    </ul>
+                </div>
+                <div class="recommendation-card" style="border-top-color: var(--warning-color);">
+                    <h3><i class="fas fa-clock"></i> Short-term Actions</h3>
+                    <ul id="shortTermActions">
+                        <li>Establish automated testing pipeline</li>
+                        <li>Define comprehensive test coverage</li>
+                    </ul>
+                </div>
+                <div class="recommendation-card" style="border-top-color: var(--info-color);">
+                    <h3><i class="fas fa-calendar-alt"></i> Long-term Actions</h3>
+                    <ul id="longTermActions">
+                        <li>Implement continuous monitoring</li>
+                        <li>Establish performance benchmarks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Enhanced Security Assessment -->
+            <h2 class="section-title"><i class="fas fa-shield-alt"></i> Security Assessment</h2>
+            <div class="api-info-grid">
+                <div class="api-info-item" style="background: #fee2e2;">
+                    <div style="font-weight: bold; color: #7c2d12;">
+                        <i class="fas fa-database"></i> SQL Injection
+                    </div>
+                    <div id="sqlInjectionAssessment" style="font-weight: 600;">Not Tested</div>
+                </div>
+                <div class="api-info-item" style="background: #fee2e2;">
+                    <div style="font-weight: bold; color: #dc2626;">
+                        <i class="fas fa-key"></i> Authentication
+                    </div>
+                    <div id="authenticationAssessment" style="font-weight: 600;">Not Tested</div>
+                </div>
+                <div class="api-info-item" style="background: #fee2e2;">
+                    <div style="font-weight: bold; color: #dc2626;">
+                        <i class="fas fa-user-shield"></i> Authorization
+                    </div>
+                    <div id="authorizationAssessment" style="font-weight: 600;">Not Tested</div>
+                </div>
+                <div class="api-info-item" style="background: #fef3c7;">
+                    <div style="font-weight: bold; color: #f59e0b;">
+                        <i class="fas fa-check-circle"></i> Input Validation
+                    </div>
+                    <div id="validationAssessment" style="font-weight: 600;">Not Tested</div>
+                </div>
+            </div>
+
+            <!-- Enhanced Test Environment -->
+            <h2 class="section-title"><i class="fas fa-vial"></i> Test Environment Details</h2>
+            <div class="card">
+                <div class="api-info-grid">
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-robot"></i> Automation Setup
+                        </div>
+                        <div class="api-info-value" id="automationSetup">Not Configured</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-check-double"></i> Assertions
+                        </div>
+                        <div class="api-info-value" id="assertionsCount">0</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-chart-pie"></i> Coverage
+                        </div>
+                        <div class="api-info-value" id="coveragePercent">0%</div>
+                    </div>
+                    <div class="api-info-item">
+                        <div class="api-info-label">
+                            <i class="fas fa-database"></i> Test Data
+                        </div>
+                        <div class="api-info-value" id="testDataInfo">Not Available</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Export Buttons Section -->
+            <div class="buttons-container">
+                <button class="export-btn" id="export-report">
+                    <i class="fas fa-download"></i> Export Bug Report
+                </button>
+                <button class="export-btn" id="export-test-cases">
+                    <i class="fas fa-file-export"></i> Export Test Cases
+                </button>
+                <button class="export-btn" id="export-full-report">
+                    <i class="fas fa-file-alt"></i> Export Full Report
+                </button>
+            </div>
+
+            <footer>
+                <p>
+                    <i class="fas fa-user-tie"></i> Generated by: Hossam Mohamed |
+                    <i class="fas fa-clock"></i> Last Updated: <span id="lastUpdated">[LAST_UPDATED]</span>
+                </p>
+                <p><i class="fas fa-robot"></i> This report is generated automatically from test execution results.</p>
+            </footer>
+
+            <!-- Print Button Container -->
+            <div class="print-button-container">
+                <button class="print-btn" id="printBtn">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Modal -->
+    <div class="modal" id="details-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Test Case Details</h2>
+                <button class="close-btn" id="close-modal">×</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CRITICAL: Simplified script load order -->
+    <script src="report-data.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Dashboard Integration Note -->
+    <!-- 
+        DASHBOARD INTEGRATION:
+        - window.REPORT_SUMMARY is automatically populated
+        - All fields have safe defaults
+        - Works even with empty test data
+        - Dashboard can read immediately after page load
+    -->
+</body>
+
+</html>

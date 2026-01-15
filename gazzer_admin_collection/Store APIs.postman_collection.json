@@ -1,0 +1,1489 @@
+{
+	"info": {
+		"_postman_id": "215e04ce-9af0-4ab0-84de-6c2313d3ee93",
+		"name": "Store APIs",
+		"description": "API collection for Store module with complete CRUD operations and all database fields including lat/long coordinates.\n\nUpdated: 2026-01-13\n\nAll field names match database column names.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-215e04ce-9af0-4ab0-84de-6c2313d3ee93?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Toggle Store Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/toggle-status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"toggle-status"
+					]
+				},
+				"description": "Toggle store status. If store is active (is_active = true), it will be deactivated (is_active = false). If store is inactive (is_active = false), it will be activated (is_active = true).\n\n**Method:** toggleStoreStatus"
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "store_name",
+							"value": "Sample Store",
+							"description": "Store name (English) - Required, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "store_name_ar",
+							"value": "متجر نموذجي",
+							"description": "Store name (Arabic) - Required, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "vendor_id",
+							"value": "1",
+							"description": "Vendor ID - Required, must exist in vendors table",
+							"type": "text"
+						},
+						{
+							"key": "store_category_id",
+							"value": "1",
+							"description": "Store category ID - Optional, must exist in store_categories table",
+							"type": "text"
+						},
+						{
+							"key": "province_zone_id",
+							"value": "1",
+							"description": "Province zone ID - Required, must exist in province_zones table",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "123 Store Street",
+							"description": "Address (English) - Required, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "address_ar",
+							"value": "شارع المتجر 123",
+							"description": "Address (Arabic) - Required, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Downtown Area",
+							"description": "Location description - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "24.7136",
+							"description": "Latitude - Optional, between -90 and 90",
+							"type": "text"
+						},
+						{
+							"key": "long",
+							"value": "46.6753",
+							"description": "Longitude - Optional, between -180 and 180",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "John Doe",
+							"description": "Contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"description": "Is active - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_restaurant",
+							"value": "0",
+							"description": "Is restaurant - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_24_hours",
+							"value": "0",
+							"description": "Is 24 hours - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_closed",
+							"value": "0",
+							"description": "Is closed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_busy",
+							"value": "0",
+							"description": "Is busy - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "online_payment_allowed",
+							"value": "1",
+							"description": "Online payment allowed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "5",
+							"description": "Store rating - Optional, numeric 0-5, default 5",
+							"type": "text"
+						},
+						{
+							"key": "rate_count",
+							"value": "0",
+							"description": "Rating count - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "max_delivery_time",
+							"value": "60",
+							"description": "Max delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "min_delivery_time",
+							"value": "30",
+							"description": "Min delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "work_from",
+							"value": "08:00",
+							"description": "Work start time - Optional, format H:i (e.g., 08:00)",
+							"type": "text"
+						},
+						{
+							"key": "work_to",
+							"value": "22:00",
+							"description": "Work end time - Optional, format H:i, must be after work_from",
+							"type": "text"
+						},
+						{
+							"key": "scheduling_slot_interval",
+							"value": "30",
+							"description": "Scheduling slot interval in minutes - Optional, integer, min 1, default 30",
+							"type": "text"
+						},
+						{
+							"key": "closing_alert_appear_before",
+							"value": "30",
+							"description": "Closing alert appear before in minutes - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "[\"tag1\", \"tag2\"]",
+							"description": "Tags array - Optional, JSON array of strings",
+							"type": "text"
+						},
+						{
+							"key": "item_categories",
+							"value": "[1, 2, 3]",
+							"description": "Item categories IDs array - Optional, JSON array of item category IDs",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Store image - Optional, image file (jpeg, png, jpg, gif), max 2MB",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores"
+					]
+				},
+				"description": "Create a new store. All field names match database column names.\n\n**Required fields:**\n- store_name (max 50 chars)\n- store_name_ar (max 50 chars)\n- vendor_id (must exist)\n- address (max 255 chars)\n- address_ar (max 255 chars)\n- province_zone_id (must exist)\n\n**Optional fields:**\n- lat, long (coordinates)\n- location, contact_person\n- is_active, is_restaurant, is_24_hours, is_closed, is_busy, online_payment_allowed\n- rate (0-5), rate_count\n- max_delivery_time, min_delivery_time\n- work_from, work_to (H:i format)\n- scheduling_slot_interval, closing_alert_appear_before\n- tags (JSON array), item_categories (JSON array)\n- image (file upload)"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bulk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"store_id\": 1,\n    \"items\": [\n        {\n            \"item_name_on_this_store\": \"Bulk Item 1\",\n            \"item_name_on_this_store_ar\": \"منتج مجمع 1\",\n            \"item_category_id\": 1,\n            \"price\": 50,\n            \"price_unit_id\": 1,\n            \"app_price\": 45,\n            \"quantity_in_stock\": 200,\n            \"to_be_displayed_on_app\": true,\n            \"to_be_displayed_on_store\": true,\n            \"auto_hide_item_on_threshold\": false,\n            \"barcode_is_store_generated\": true,\n            \"inventory_method\": \"FIFO\"\n        },\n        {\n            \"item_name_on_this_store\": \"Bulk Item 2\",\n            \"item_name_on_this_store_ar\": \"منتج مجمع 2\",\n            \"item_category_id\": 1,\n            \"price\": 75,\n            \"price_unit_id\": 1,\n            \"app_price\": 70,\n            \"quantity_in_stock\": 150,\n            \"to_be_displayed_on_app\": true,\n            \"to_be_displayed_on_store\": true,\n            \"auto_hide_item_on_threshold\": false,\n            \"barcode_is_store_generated\": true,\n            \"inventory_method\": \"FIFO\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/items/bulk",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"items",
+						"bulk"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\BulkStoreItemController@bulkStore\n\n**Method:** bulkStore"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Categories",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Category\",\n    \"name_ar\": \"فئة جديدة\",\n    \"description\": \"Category description\",\n    \"description_ar\": \"وصف الفئة\",\n    \"parent_id\": null,\n    \"is_active\": true,\n    \"sort_order\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@store\n\n**Method:** store"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Import Excel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "Excel file (.xlsx, .xls)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/items/import-excel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"items",
+						"import-excel"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@uploadExcel\n\n**Method:** uploadExcel"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Items",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"item_name_on_this_store\": \"Sample Item\",\n    \"item_name_on_this_store_ar\": \"منتج نموذجي\",\n    \"item_category_id\": 1,\n    \"barcode\": \"1234567890123\",\n    \"price\": 99.99,\n    \"price_unit_id\": 1,\n    \"app_price\": 89.99,\n    \"quantity_in_stock\": 100,\n    \"low_stock_alert\": 10,\n    \"max_preferred_qty\": 5,\n    \"to_be_displayed_on_app\": true,\n    \"to_be_displayed_on_store\": true,\n    \"auto_hide_item_on_threshold\": true,\n    \"barcode_is_store_generated\": false,\n    \"inventory_method\": \"FIFO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/items",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"items"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@createItem\n\n**Method:** createItem"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@destroy\n\n**Method:** destroy"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Categories",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@destroy\n\n**Method:** destroy"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Items",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/items/{item_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"items",
+						"{item_id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@deleteItem\n\n**Method:** deleteItem"
+			},
+			"response": []
+		},
+		{
+			"name": "Download Import Template",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/import-template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"import-template"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@downloadTemplate\n\n**Method:** downloadTemplate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Items per page",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "Sort field",
+							"disabled": true
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "Sort direction (asc/desc)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@index\n\n**Method:** index"
+			},
+			"response": []
+		},
+		{
+			"name": "Get By ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@show\n\n**Method:** show"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@index\n\n**Method:** index"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@show\n\n**Method:** show"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"details"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@getStore\n\n**Method:** getStore"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Import Template",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/items/import-template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"items",
+						"import-template"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@downloadTemplate\n\n**Method:** downloadTemplate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/category/{store_category_id}/grouped-by/item-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"category",
+						"{store_category_id}",
+						"grouped-by",
+						"item-categories"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@getStoresGroupedByItemCategories\n\n**Method:** getStoresGroupedByItemCategories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/item-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"item-categories"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@getStoreItemCategories\n\n**Method:** getStoreItemCategories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/category/{store_category_id}/item-category/{item_category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"category",
+						"{store_category_id}",
+						"item-category",
+						"{item_category_id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@getStoresByStoreCategoryIdAndItemCategoryId\n\n**Method:** getStoresByStoreCategoryIdAndItemCategoryId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/items",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"items"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@getStoreItems\n\n**Method:** getStoreItems"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/items/{item_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"items",
+						"{item_id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@getItem\n\n**Method:** getItem"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items Has Offers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/category/{store_category_id}/item-category/{item_category_id}/items-has-offers",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"category",
+						"{store_category_id}",
+						"item-category",
+						"{item_category_id}",
+						"items-has-offers"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@getItemsHasOffersByStoreCategoryIdAndItemCategoryId\n\n**Method:** getItemsHasOffersByStoreCategoryIdAndItemCategoryId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reports",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/reports",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2026-01-01",
+							"description": "Report start date",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2026-12-31",
+							"description": "Report end date",
+							"disabled": true
+						},
+						{
+							"key": "group_by",
+							"value": "day",
+							"description": "Group by (day/week/month)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@getReports\n\n**Method:** getReports"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Statistics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/statistics",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"statistics"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2026-01-01",
+							"description": "Start date for statistics",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2026-12-31",
+							"description": "End date for statistics",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@getStoreStatistics\n\n**Method:** getStoreStatistics"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sub Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories/{category_id}/sub-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories",
+						"{category_id}",
+						"sub-categories"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@getSubCategoriesByCategoryId\n\n**Method:** getSubCategoriesByCategoryId"
+			},
+			"response": []
+		},
+		{
+			"name": "Import from Excel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "Excel file (.xlsx, .xls)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/import-excel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"import-excel"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreController@uploadExcel\n\n**Method:** uploadExcel"
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "store_name",
+							"value": "Updated Store",
+							"description": "Store name (English) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "store_name_ar",
+							"value": "متجر محدث",
+							"description": "Store name (Arabic) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "vendor_id",
+							"value": "1",
+							"description": "Vendor ID - Optional, must exist in vendors table",
+							"type": "text"
+						},
+						{
+							"key": "store_category_id",
+							"value": "1",
+							"description": "Store category ID - Optional, must exist in store_categories table",
+							"type": "text"
+						},
+						{
+							"key": "province_zone_id",
+							"value": "1",
+							"description": "Province zone ID - Optional, must exist in province_zones table",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "456 Updated Street",
+							"description": "Address (English) - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "address_ar",
+							"value": "شارع محدث 456",
+							"description": "Address (Arabic) - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Updated Location",
+							"description": "Location description - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "24.7136",
+							"description": "Latitude - Optional, between -90 and 90",
+							"type": "text"
+						},
+						{
+							"key": "long",
+							"value": "46.6753",
+							"description": "Longitude - Optional, between -180 and 180",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "Jane Doe",
+							"description": "Contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"description": "Is active - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_restaurant",
+							"value": "0",
+							"description": "Is restaurant - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_24_hours",
+							"value": "0",
+							"description": "Is 24 hours - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_closed",
+							"value": "0",
+							"description": "Is closed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_busy",
+							"value": "0",
+							"description": "Is busy - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "online_payment_allowed",
+							"value": "1",
+							"description": "Online payment allowed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "4.5",
+							"description": "Store rating - Optional, numeric 0-5",
+							"type": "text"
+						},
+						{
+							"key": "rate_count",
+							"value": "10",
+							"description": "Rating count - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "max_delivery_time",
+							"value": "45",
+							"description": "Max delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "min_delivery_time",
+							"value": "20",
+							"description": "Min delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "work_from",
+							"value": "09:00",
+							"description": "Work start time - Optional, format H:i",
+							"type": "text"
+						},
+						{
+							"key": "work_to",
+							"value": "21:00",
+							"description": "Work end time - Optional, format H:i, must be after work_from",
+							"type": "text"
+						},
+						{
+							"key": "scheduling_slot_interval",
+							"value": "30",
+							"description": "Scheduling slot interval in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "closing_alert_appear_before",
+							"value": "30",
+							"description": "Closing alert appear before in minutes - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "[\"updated\", \"tag\"]",
+							"description": "Tags array - Optional, JSON array of strings",
+							"type": "text"
+						},
+						{
+							"key": "item_categories",
+							"value": "[1, 2]",
+							"description": "Item categories IDs array - Optional, JSON array of item category IDs",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Store image - Optional, image file (jpeg, png, jpg, gif), max 2MB",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{id}"
+					]
+				},
+				"description": "Update an existing store. All field names match database column names. All fields are optional for update.\n\n**Available fields:**\n- store_name, store_name_ar (max 50 chars each)\n- vendor_id, store_category_id, province_zone_id\n- address, address_ar (max 255 chars each)\n- location, contact_person\n- lat, long (coordinates)\n- is_active, is_restaurant, is_24_hours, is_closed, is_busy, online_payment_allowed\n- rate (0-5), rate_count\n- max_delivery_time, min_delivery_time\n- work_from, work_to (H:i format)\n- scheduling_slot_interval, closing_alert_appear_before\n- tags (JSON array), item_categories (JSON array)\n- image (file upload)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Categories",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updated Category\",\n    \"name_ar\": \"فئة محدثة\",\n    \"is_active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/categories/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"categories",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreCategoryController@update\n\n**Method:** update"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Items",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"item_name_on_this_store\": \"Updated Item\",\n    \"price\": 109.99,\n    \"app_price\": 99.99,\n    \"quantity_in_stock\": 150\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/stores/{store_id}/items/{item_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"stores",
+						"{store_id}",
+						"items",
+						"{item_id}"
+					]
+				},
+				"description": "Modules\\Store\\Http\\Controllers\\StoreItemController@updateItem\n\n**Method:** updateItem"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

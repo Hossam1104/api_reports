@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazzer API Testing Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #1abc9c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* ADDED: Layout container for consistent padding */
+        .layout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .examiner-info {
+            text-align: right;
+        }
+
+        .examiner-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .examiner-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* KPI Statistics */
+        .kpi-section {
+            padding: 2.5rem 0;
+        }
+
+        .kpi-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-title h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--secondary);
+            transition: transform 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .kpi-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Reports Section */
+        .reports-section {
+            padding: 2rem 0 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #2980b9;
+        }
+
+        .action-btn.secondary {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .action-btn.secondary:hover {
+            background: #d5dbdb;
+        }
+
+        /* Reports Grid */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* API Report Card */
+        .report-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .report-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .report-card.api-report {
+            border-color: var(--secondary);
+        }
+
+        .report-card.template-report {
+            border-color: #bdc3c7;
+            border-style: dashed;
+            background: #f8f9fa;
+        }
+
+        .report-header {
+            padding: 1.25rem;
+            background: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .report-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .report-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-api {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .badge-template {
+            background: #bdc3c7;
+            color: var(--primary);
+        }
+
+        .report-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .report-date,
+        .report-folder {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+
+        .report-desc {
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .view-report-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .view-report-btn:hover {
+            background: #2980b9;
+        }
+
+        .view-report-btn.template {
+            background: #95a5a6;
+        }
+
+        .view-report-btn.template:hover {
+            background: #7f8c8d;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 2.5rem 0 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .footer-links h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .admin-panel-content {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            padding: 1rem;
+        }
+
+        .admin-panel.active .admin-panel-content {
+            display: block;
+        }
+
+        .admin-panel h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .refresh-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Status Messages */
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .message-success {
+            background: var(--success);
+        }
+
+        .message-error {
+            background: var(--danger);
+        }
+
+        .message-info {
+            background: var(--secondary);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .examiner-info {
+                text-align: center;
+            }
+
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-value {
+                font-size: 2rem;
+            }
+
+            .action-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="layout-container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Gazzer API Testing Dashboard</h1>
+                    <p>Centralized Quality Assurance Monitoring</p>
+                </div>
+            </div>
+            <div class="examiner-info">
+                <h2>Hossam Mohamed</h2>
+                <p>Senior Software QA Engineer</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- KPI Statistics -->
+    <section class="kpi-section">
+        <div class="layout-container">
+            <div class="kpi-title">
+                <h2>API Testing Overview</h2>
+                <p>Aggregated statistics from all discovered API reports (template excluded)</p>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="kpi-value" id="total-apis">0</div>
+                    <div class="kpi-label">APIs Tested</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="kpi-value" id="total-tests">0</div>
+                    <div class="kpi-label">Total Test Cases</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="kpi-value" id="avg-success">0%</div>
+                    <div class="kpi-label">Avg Success Rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="kpi-value" id="total-bugs">0</div>
+                    <div class="kpi-label">Total Failed Tests</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports Section -->
+    <section class="reports-section">
+        <div class="layout-container">
+            <div class="section-header">
+                <h2>API Testing Reports</h2>
+                <div class="section-actions">
+                    <button class="action-btn secondary" id="scan-folders">
+                        <i class="fas fa-sync-alt"></i> Scan for Reports
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="reports-grid" id="reports-grid">
+                <!-- Reports will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="layout-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Gazzer API Testing</h3>
+                    <p>Enterprise-grade API testing dashboard with comprehensive reporting and monitoring capabilities.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul id="quick-links">
+                        <li><a href="./report_template/index.html" target="_blank">Report Template</a></li>
+                        <li><a href="#" onclick="event.preventDefault();">Documentation</a></li>
+                        <li><a href="#" onclick="event.preventDefault();">Testing Methodology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-user"></i> Hossam Mohamed</li>
+                        <li><i class="fas fa-briefcase"></i> Senior Software QA Engineer</li>
+                        <li><i class="fas fa-envelope"></i> reports@gazzer-api.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2024</span> Gazzer API Testing Dashboard. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <button class="admin-btn" id="admin-toggle">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="admin-panel-content">
+            <h4>Dashboard Controls</h4>
+            <button class="refresh-btn" id="refresh-all">
+                <i class="fas fa-redo"></i> Refresh All
+            </button>
+            <button class="refresh-btn" id="clear-cache">
+                <i class="fas fa-trash"></i> Clear Cache
+            </button>
+            <div style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px; text-align: center;">
+                Reports: <span id="reports-count">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================
+        // DASHBOARD CORE
+        // ============================
+        class DashboardCore {
+            constructor() {
+                this.reports = [];
+                this.stats = {
+                    totalApis: 0,
+                    totalTests: 0,
+                    totalBugs: 0,
+                    avgSuccessRate: 0,
+                    lastScan: null
+                };
+                this.initialized = false;
+                this.knownFolders = new Set();
+            }
+
+
+
+            async initialize() {
+                console.log('🚀 Initializing API Testing Dashboard...');
+
+                // Set current year
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+
+                // Setup event listeners
+                this.setupEventListeners();
+
+                // Initial scan
+                await this.scanForReports();
+
+                this.initialized = true;
+                console.log('✅ Dashboard initialized successfully');
+            }
+
+            async scanForReports() {
+
+                console.log('🔍 Scanning for API reports...');
+                console.log('📌 Current working directory assumed to be:', window.location.pathname);
+
+                this.reports = [];
+                this.knownFolders.clear();
+
+                const foundReports = [];
+
+                // Template folder excluded as per user request
+                // try {
+                //    const templateReport = await this.loadReportFromFolder('report_template');
+                //    ...
+                // }
+
+                // Try to discover other API folders
+                const potentialFolders = [
+                    'Authentication', 'Banners',
+                ];
+
+                console.log('📁 Checking potential folders:', potentialFolders);
+
+
+                for (const folder of potentialFolders) {
+                    console.log(`\n🔍 Checking folder: ${folder}`);
+                    try {
+                        const report = await this.loadReportFromFolder(folder);
+                        console.log(`📋 Report loaded for ${folder}:`, report);
+
+                        if (report) {
+                            console.log(`📊 Report details - isTemplate: ${report.isTemplate}, type: ${typeof report.isTemplate}`);
+
+                            if (!report.isTemplate) {
+                                foundReports.push(report);
+                                this.knownFolders.add(folder);
+                                console.log(`✅ Added API report: ${report.apiName} in ${folder}`);
+                            } else {
+                                console.log(`⏭️ Skipping template report: ${report.apiName} in ${folder}`);
+                            }
+                        }
+                    } catch (error) {
+                        console.log(`❌ Failed to load ${folder}: ${error.message}`);
+                        // Silent fail for non-existent folders
+                    }
+                }
+
+                this.reports = foundReports;
+                this.updateStatistics();
+                this.renderDashboard();
+
+                console.log(`📊 Scan complete: ${this.reports.length} report(s) found`);
+                console.log('📋 Reports found:', this.reports);
+
+                return this.reports.length;
+            }
+
+            async loadReportFromFolder(folderName) {
+                console.log(`📂 Attempting to load report from folder: "${folderName}"`);
+
+                try {
+                    // Try to fetch and evaluate the report data directly
+                    const response = await fetch(`./${folderName}/report-data.js`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const scriptContent = await response.text();
+
+                    // Execute the script content to get the data
+                    // This handles comments, flexible syntax, and complex strings correctly
+                    // distinct from the fragile JSON parsing approach
+                    const executeData = new Function(scriptContent);
+                    executeData();
+
+                    const REPORT_DATA = window.REPORT_DATA;
+
+                    if (!REPORT_DATA) {
+                        throw new Error('REPORT_DATA not found in window object after script execution');
+                    }
+
+                    // Calculate summary from REPORT_DATA directly
+                    const totalTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.length : 0;
+                    const passedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'passed').length : 0;
+                    const failedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'failed').length : 0;
+                    const skippedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'skipped').length : 0;
+                    const criticalBugs = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.severity === 'critical' && tc.status === 'failed').length : 0;
+                    const successRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+
+                    const summary = {
+                        apiName: REPORT_DATA.meta?.apiName || "Unnamed API",
+                        folderName: folderName,
+                        isTemplate: REPORT_DATA.meta?.isTemplate || false,
+                        totalTests: totalTests,
+                        passedTests: passedTests,
+                        failedTests: failedTests,
+                        skippedTests: skippedTests,
+                        criticalBugs: criticalBugs,
+                        successRate: successRate,
+                        lastUpdated: REPORT_DATA.meta?.createdAt || new Date().toLocaleDateString(),
+                        reportUrl: `./${folderName}/index.html`
+                    };
+
+                    console.log(`✅ Successfully loaded report for ${folderName}:`, summary);
+                    return summary;
+
+                } catch (error) {
+                    console.error(`❌ Failed to load report from ${folderName}:`, error);
+                    return null;
+                }
+            }
+
+
+
+            updateStatistics() {
+                // Filter out template reports - CRITICAL: Only count API reports
+                const apiReports = this.reports.filter(report => !report.isTemplate);
+
+                this.stats.totalApis = apiReports.length;
+                this.stats.totalTests = apiReports.reduce((sum, report) => sum + report.totalTests, 0);
+                this.stats.totalBugs = apiReports.reduce((sum, report) => sum + report.failedTests, 0);
+
+                const totalSuccessRate = apiReports.reduce((sum, report) => sum + report.successRate, 0);
+                this.stats.avgSuccessRate = apiReports.length > 0
+                    ? Math.round(totalSuccessRate / apiReports.length)
+                    : 0;
+
+                this.stats.lastScan = new Date().toLocaleString();
+            }
+
+            renderDashboard() {
+                // Update KPI statistics
+                document.getElementById('total-apis').textContent = this.stats.totalApis;
+                document.getElementById('total-tests').textContent = this.stats.totalTests;
+                document.getElementById('avg-success').textContent = this.stats.avgSuccessRate > 0 ? `${this.stats.avgSuccessRate}%` : '0%';
+                document.getElementById('total-bugs').textContent = this.stats.totalBugs;
+                document.getElementById('reports-count').textContent = this.reports.length;
+
+                // Update reports grid
+                this.renderReportsGrid();
+
+                // Update quick links
+                this.updateQuickLinks();
+            }
+
+            renderReportsGrid() {
+                const grid = document.getElementById('reports-grid');
+
+                if (this.reports.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <h3>No Reports Found</h3>
+                            <p>No API testing reports were found. Copy the template folder and populate it with test data to get started.</p>
+                            <a href="./report_template/index.html" class="view-report-btn template" style="max-width: 300px; margin: 0 auto;">
+                                <i class="fas fa-file-alt"></i> Use Template
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Separate template and API reports
+                const apiReports = this.reports.filter(r => !r.isTemplate);
+                const templateReport = this.reports.find(r => r.isTemplate);
+
+                let reportsHTML = '';
+
+                // Render API reports first
+                apiReports.forEach((report, index) => {
+                    reportsHTML += this.createReportCardHTML(report, index, false);
+                });
+
+                // Render template report last (if exists)
+                if (templateReport) {
+                    reportsHTML += this.createReportCardHTML(templateReport, apiReports.length, true);
+                }
+
+                grid.innerHTML = reportsHTML;
+            }
+
+            createReportCardHTML(report, index, isTemplate) {
+                const colors = ['#3498db', '#1abc9c', '#9b59b6', '#e74c3c', '#f39c12', '#2ecc71'];
+                const color = colors[index % colors.length];
+
+                return `
+                    <div class="report-card ${isTemplate ? 'template-report' : 'api-report'}">
+                        <div class="report-header">
+                            <div class="report-title">${report.apiName}</div>
+                            <div class="report-badge ${isTemplate ? 'badge-template' : 'badge-api'}">
+                                ${isTemplate ? 'Template' : 'API Report'}
+                            </div>
+                        </div>
+                        <div class="report-body">
+                            <div class="report-meta">
+                                <div class="report-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>${report.lastUpdated}</span>
+                                </div>
+                                <div class="report-folder">
+                                    <i class="fas fa-folder"></i>
+                                    <span>${report.folderName}/</span>
+                                </div>
+                            </div>
+                            <p class="report-desc">
+                                ${isTemplate
+                        ? 'Reusable report template. Copy this folder, rename it, and populate with your API test data.'
+                        : `${report.totalTests} test cases executed with ${report.successRate}% success rate.`}
+                            </p>
+                            ${!isTemplate ? `
+                            <div class="report-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">${report.totalTests}</div>
+                                    <div class="stat-name">Tests</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${report.successRate}%</div>
+                                    <div class="stat-name">Success</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${report.failedTests}</div>
+                                    <div class="stat-name">Failed</div>
+                                </div>
+                            </div>
+                            ` : ''}
+                            <a href="${report.reportUrl}" 
+                               class="view-report-btn ${isTemplate ? 'template' : ''}"
+                               ${isTemplate ? 'target="_blank"' : ''}>
+                                <i class="fas fa-external-link-alt"></i>
+                                ${isTemplate ? 'View Template' : 'View Report'}
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateQuickLinks() {
+                const quickLinks = document.getElementById('quick-links');
+                const apiReports = this.reports.filter(r => !r.isTemplate);
+
+                if (apiReports.length > 0) {
+                    const linksHTML = apiReports.map(report => `
+                        <li><a href="${report.reportUrl}" target="_blank">${report.apiName} Report</a></li>
+                    `).join('');
+
+                    quickLinks.innerHTML = `
+                        ${linksHTML}
+                        <li><a href="#" onclick="event.preventDefault();">Documentation</a></li>
+                    `;
+                }
+            }
+
+            showMessage(message, type = 'info') {
+                // Remove existing messages
+                document.querySelectorAll('.status-message').forEach(msg => msg.remove());
+
+                const messageEl = document.createElement('div');
+                messageEl.className = `status-message message-${type}`;
+                messageEl.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                            <span>${message}</span>
+                        </div>
+                        <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+
+                document.body.appendChild(messageEl);
+
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    if (messageEl.parentElement) {
+                        messageEl.remove();
+                    }
+                }, 5000);
+            }
+
+            setupEventListeners() {
+                // Scan folders button
+                document.getElementById('scan-folders').addEventListener('click', async () => {
+                    const btn = document.getElementById('scan-folders');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<span class="loading"></span> Scanning...';
+                    btn.disabled = true;
+
+                    try {
+                        const count = await this.scanForReports();
+                        this.showMessage(`Found ${count} report(s)`, 'success');
+                    } catch (error) {
+                        this.showMessage(`Scan failed: ${error.message}`, 'error');
+                    } finally {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+
+
+
+                // Admin panel toggle
+                document.getElementById('admin-toggle').addEventListener('click', () => {
+                    document.getElementById('admin-panel').classList.toggle('active');
+                });
+
+                // Refresh all button
+                document.getElementById('refresh-all').addEventListener('click', async () => {
+                    const btn = document.getElementById('refresh-all');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<span class="loading"></span> Refreshing...';
+
+                    try {
+                        await this.scanForReports();
+                        this.showMessage('Dashboard refreshed successfully', 'success');
+                    } catch (error) {
+                        this.showMessage(`Refresh failed: ${error.message}`, 'error');
+                    } finally {
+                        btn.innerHTML = originalText;
+                    }
+                });
+
+                // Clear cache button
+                document.getElementById('clear-cache').addEventListener('click', () => {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    this.showMessage('Cache cleared successfully', 'success');
+                });
+
+                // Close admin panel when clicking outside
+                document.addEventListener('click', (event) => {
+                    const adminPanel = document.getElementById('admin-panel');
+                    if (!adminPanel.contains(event.target)) {
+                        adminPanel.classList.remove('active');
+                    }
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (event) => {
+                    // Ctrl/Cmd + R to refresh
+                    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+                        event.preventDefault();
+                        this.scanForReports();
+                    }
+
+                    // Esc to close admin panel
+                    if (event.key === 'Escape') {
+                        document.getElementById('admin-panel').classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // ============================
+        // INITIALIZATION
+        // ============================
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dashboard = new DashboardCore();
+            window.dashboard.initialize();
+
+            // Listen for report ready events
+            document.addEventListener('reportReady', (event) => {
+                console.log('📬 Received reportReady event:', event.detail);
+                // The report is already loaded via script tags, so we just need to refresh the view
+                this.updateStatistics();
+                this.renderDashboard();
+            });
+
+            // Auto-refresh every 2 minutes
+            setInterval(() => {
+                if (window.dashboard && window.dashboard.initialized) {
+                    window.dashboard.scanForReports();
+                }
+            }, 2 * 60 * 1000);
+        });
+    </script>
+    <script>
+        // Monkey-patch loadReportFromFolder to fix file loading issues (replaces fetch with script tag injection)
+        if (typeof DashboardCore !== 'undefined') {
+            DashboardCore.prototype.loadReportFromFolder = async function (folderName) {
+                console.log(`📂 [PATCHED] Attempting to load report from folder: "${folderName}"`);
+                return new Promise((resolve) => {
+                    // Clear previous data
+                    window.REPORT_DATA = undefined;
+                    const script = document.createElement('script');
+                    script.src = `./${folderName}/report-data.js?t=${new Date().getTime()}`;
+                    script.onload = () => {
+                        try {
+                            const REPORT_DATA = window.REPORT_DATA;
+                            if (!REPORT_DATA) {
+                                console.error(`❌ No REPORT_DATA found in ${folderName}`);
+                                if (script.parentNode) document.head.removeChild(script);
+                                resolve(null);
+                                return;
+                            }
+                            const totalTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.length : 0;
+                            const passedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'passed').length : 0;
+                            const failedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'failed').length : 0;
+                            const skippedTests = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.status === 'skipped').length : 0;
+                            const criticalBugs = REPORT_DATA.testCases ? REPORT_DATA.testCases.filter(tc => tc.severity === 'critical' && tc.status === 'failed').length : 0;
+                            const successRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+                            const summary = {
+                                apiName: REPORT_DATA.meta?.apiName || "Unnamed API",
+                                folderName: folderName,
+                                isTemplate: REPORT_DATA.meta?.isTemplate || false,
+                                totalTests: totalTests,
+                                passedTests: passedTests,
+                                failedTests: failedTests,
+                                skippedTests: skippedTests,
+                                criticalBugs: criticalBugs,
+                                successRate: successRate,
+                                lastUpdated: REPORT_DATA.meta?.createdAt || new Date().toLocaleDateString(),
+                                reportUrl: `./${folderName}/index.html`
+                            };
+                            console.log(`✅ Successfully loaded report for ${folderName}:`, summary);
+                            if (script.parentNode) document.head.removeChild(script);
+                            resolve(summary);
+                        } catch (error) {
+                            console.error(`❌ Error processing report data for ${folderName}:`, error);
+                            if (script.parentNode) document.head.removeChild(script);
+                            resolve(null);
+                        }
+                    };
+                    script.onerror = (error) => {
+                        console.warn(`⚠️ Failed to load script from ${folderName}`);
+                        if (script.parentNode) document.head.removeChild(script);
+                        resolve(null);
+                    };
+                    document.head.appendChild(script);
+                });
+            };
+            console.log("✅ DashboardCore.prototype.loadReportFromFolder patched successfully.");
+        } else {
+            console.error("❌ DashboardCore not defined, patch failed.");
+        }
+    </script>
+</body>
+
+</html>

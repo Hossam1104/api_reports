@@ -1,0 +1,614 @@
+{
+	"info": {
+		"_postman_id": "7b9f1a49-3691-4516-a597-804982b1254b",
+		"name": "Vendor APIs",
+		"description": "API collection for Vendor module with complete CRUD operations and all database fields.\n\nUpdated: 2026-01-13\n\nAll field names match database column names.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-7b9f1a49-3691-4516-a597-804982b1254b?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Toggle Vendor Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}/toggle-status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}",
+						"toggle-status"
+					]
+				},
+				"description": "Toggle vendor status. If vendor is active (is_active = true), it will be deactivated (is_active = false). If vendor is inactive (is_active = false), it will be activated (is_active = true).\n\n**Method:** toggleStatus"
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "vendor_name",
+							"value": "Sample Vendor",
+							"type": "text"
+						},
+						{
+							"key": "vendor_name_ar",
+							"value": "مورد نموذجي",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "contact_person_phone_number",
+							"value": "+1234567890",
+							"type": "text"
+						},
+						{
+							"key": "second_contact_person",
+							"value": "Jane Doe",
+							"type": "text"
+						},
+						{
+							"key": "second_contact_person_phone_number",
+							"value": "+0987654321",
+							"type": "text"
+						},
+						{
+							"key": "main_location",
+							"value": "123 Main Street",
+							"type": "text"
+						},
+						{
+							"key": "commission",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "commission_type",
+							"value": "percent",
+							"type": "text"
+						},
+						{
+							"key": "cash_orders_bulk_settlement",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "auto_approve_updates_on_order_division",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "allow_vendor_to_edit_time_for_editting_order",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "surcharge_enabled",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "surcharge_percent",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Image file (optional)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/vendors",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@store\n\n**Method:** store"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@destroy\n\n**Method:** destroy"
+			},
+			"response": []
+		},
+		{
+			"name": "Download Import Template",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors/import-template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"import-template"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@downloadTemplate\n\n**Method:** downloadTemplate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Items per page",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "Sort field",
+							"disabled": true
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "Sort direction (asc/desc)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@index\n\n**Method:** index"
+			},
+			"response": []
+		},
+		{
+			"name": "Get By ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@show\n\n**Method:** show"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Statistics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}/statistics",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}",
+						"statistics"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2026-01-01",
+							"description": "Start date for statistics",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2026-12-31",
+							"description": "End date for statistics",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@getStatistics\n\n**Method:** getStatistics"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stores",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}/stores",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}",
+						"stores"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@getVendorStores\n\n**Method:** getVendorStores"
+			},
+			"response": []
+		},
+		{
+			"name": "Import from Excel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "Excel file (.xlsx, .xls)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/vendors/import-excel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"import-excel"
+					]
+				},
+				"description": "Modules\\Vendor\\Http\\Controllers\\VendorController@uploadExcel\n\n**Method:** uploadExcel"
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "vendor_name",
+							"value": "Updated Vendor",
+							"description": "Vendor name (English) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "vendor_name_ar",
+							"value": "مورد محدث",
+							"description": "Vendor name (Arabic) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "John Updated",
+							"description": "Contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "contact_person_phone_number",
+							"value": "+1234567890",
+							"description": "Contact person phone number - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "second_contact_person",
+							"value": "Jane Updated",
+							"description": "Second contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "second_contact_person_phone_number",
+							"value": "+0987654321",
+							"description": "Second contact person phone number - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "main_location",
+							"value": "456 Updated Street",
+							"description": "Main location - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "commission",
+							"value": "15",
+							"description": "Commission amount - Optional, numeric, min 0",
+							"type": "text"
+						},
+						{
+							"key": "commission_type",
+							"value": "percent",
+							"description": "Commission type - Optional, either 'percent' or 'fixed'",
+							"type": "text"
+						},
+						{
+							"key": "cash_orders_bulk_settlement",
+							"value": "1",
+							"description": "Cash orders bulk settlement - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "auto_approve_updates_on_order_division",
+							"value": "0",
+							"description": "Auto approve updates on order division - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "allow_vendor_to_edit_time_for_editting_order",
+							"value": "0",
+							"description": "Allow vendor to edit time for editing order - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"description": "Is active - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "surcharge_enabled",
+							"value": "0",
+							"description": "Surcharge enabled - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "surcharge_percent",
+							"value": "0",
+							"description": "Surcharge percent - Optional, numeric, min 0",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Vendor image - Optional, image file (jpeg, png, jpg, gif, webp), max 2MB",
+							"type": "file"
+						},
+						{
+							"key": "cover_image",
+							"value": "",
+							"description": "Vendor cover image - Optional, image file (jpeg, png, jpg, gif, webp), max 4MB",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/vendors/{id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"vendors",
+						"{id}"
+					]
+				},
+				"description": "Update an existing vendor. All field names match database column names. All fields are optional for update.\n\n**Available fields:**\n- vendor_name, vendor_name_ar (max 50 chars each)\n- contact_person, contact_person_phone_number\n- second_contact_person, second_contact_person_phone_number\n- main_location\n- commission (numeric, min 0), commission_type (percent or fixed)\n- cash_orders_bulk_settlement, auto_approve_updates_on_order_division, allow_vendor_to_edit_time_for_editting_order, is_active (booleans)\n- surcharge_enabled (boolean), surcharge_percent (numeric, min 0)\n- image, cover_image (file uploads)"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

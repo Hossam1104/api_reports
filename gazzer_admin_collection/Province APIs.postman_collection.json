@@ -1,0 +1,717 @@
+{
+	"info": {
+		"_postman_id": "43aad1e7-7985-4cc7-9efe-01e215c8602a",
+		"name": "Province APIs",
+		"description": "API collection for Province module with complete data examples\n\nGenerated: 2026-01-13 18:14:14\nUpdated: 2026-01-13",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-43aad1e7-7985-4cc7-9efe-01e215c8602a?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Provinces",
+			"item": [
+				{
+					"name": "Get All Provinces (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces"
+							]
+						},
+						"description": "Get all active provinces (public endpoint)\n\n**Method:** getProvinces\n\n**Response:** Returns collection of provinces with:\n- id\n- province_name (localized)\n- province_name_en\n- province_name_ar\n- status\n- created_at\n- updated_at"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Provinces (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces?per_page=15&search=&status=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by province name (English or Arabic)"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filter by status (true/false)"
+								}
+							]
+						},
+						"description": "Get all provinces with pagination and filters (admin endpoint)\n\n**Method:** getAllProvinces\n\n**Query Parameters:**\n- per_page: Items per page (default: 15)\n- search: Search by province name\n- status: Filter by status (true/false)\n\n**Response:** Returns paginated collection with provinces and their zones"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Province by ID (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"1"
+							]
+						},
+						"description": "Get a specific province by ID (admin endpoint)\n\n**Method:** getProvince\n\n**Response:** Returns province with:\n- id\n- province_name\n- province_name_en\n- province_name_ar\n- status\n- created_at\n- updated_at\n- provinceZones (relationship)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Province",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"province_name\": \"Riyadh\",\n    \"province_name_ar\": \"الرياض\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/provinces",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces"
+							]
+						},
+						"description": "Create a new province\n\n**Method:** storeProvince\n\n**Required Fields:**\n- province_name: Province name in English\n- province_name_ar: Province name in Arabic\n\n**Optional Fields:**\n- status: Boolean (default: true)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Province",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"province_name\": \"Riyadh Updated\",\n    \"province_name_ar\": \"الرياض محدث\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/provinces/{province_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"{province_id}"
+							],
+							"variable": [
+								{
+									"key": "province_id",
+									"value": "1",
+									"description": "Province ID"
+								}
+							]
+						},
+						"description": "Update an existing province\n\n**Method:** updateProvince\n\n**Fields:**\n- province_name: Province name in English\n- province_name_ar: Province name in Arabic\n- status: Boolean"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Province",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/{province_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"{province_id}"
+							],
+							"variable": [
+								{
+									"key": "province_id",
+									"value": "1",
+									"description": "Province ID"
+								}
+							]
+						},
+						"description": "Delete a province\n\n**Method:** destroyProvince\n\n**Note:** Cannot delete province if it has related zones"
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Province Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/{province_id}/toggle-status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"{province_id}",
+								"toggle-status"
+							],
+							"variable": [
+								{
+									"key": "province_id",
+									"value": "1",
+									"description": "Province ID"
+								}
+							]
+						},
+						"description": "Toggle province status (activate/deactivate)\n\n**Method:** toggleProvinceStatus\n\n**Response:** Returns updated province with toggled status"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Zones",
+			"item": [
+				{
+					"name": "Get All Zones (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones?per_page=15&province_id=&search=&status=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "province_id",
+									"value": "",
+									"description": "Filter by province ID"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by zone name (English or Arabic)"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filter by status (true/false)"
+								}
+							]
+						},
+						"description": "Get all province zones with pagination and filters (admin endpoint)\n\n**Method:** getAllProvinceZones\n\n**Query Parameters:**\n- per_page: Items per page (default: 15)\n- province_id: Filter by province ID\n- search: Search by zone name\n- status: Filter by status (true/false)\n\n**Response:** Returns paginated collection with zones and their provinces"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Zone by ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones/{zone_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones",
+								"{zone_id}"
+							],
+							"variable": [
+								{
+									"key": "zone_id",
+									"value": "1",
+									"description": "Zone ID"
+								}
+							]
+						},
+						"description": "Get a specific zone by ID (admin endpoint)\n\n**Method:** getProvinceZone\n\n**Response:** Returns zone with:\n- id\n- zone_name\n- zone_name_en\n- zone_name_ar\n- province_id\n- delivery_fee_per_km\n- service_fee\n- service_fee_type\n- type\n- points\n- status\n- created_at\n- updated_at\n- province (relationship)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Zones by Province ID (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/{id}/zones",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"{id}",
+								"zones"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Province ID"
+								}
+							]
+						},
+						"description": "Get all active zones for a specific province (public endpoint)\n\n**Method:** getZonesByProvinceId\n\n**Response:** Returns collection of active zones for the province"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Zones by Province ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/{province_id}/zones",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"{province_id}",
+								"zones"
+							],
+							"variable": [
+								{
+									"key": "province_id",
+									"value": "1",
+									"description": "Province ID"
+								}
+							]
+						},
+						"description": "Get all zones for a specific province (admin endpoint)\n\n**Method:** getZonesByProvinceId\n\n**Response:** Returns collection of zones for the province"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Zone",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"province_id\": 1,\n    \"zone_name\": \"North Zone\",\n    \"zone_name_ar\": \"المنطقة الشمالية\",\n    \"delivery_fee_per_km\": 15,\n    \"service_fee\": 10,\n    \"service_fee_type\": \"fixed\",\n    \"type\": \"circle\",\n    \"points\": {\n        \"radius\": \"50\",\n        \"point\": {\n            \"lat\": 24.7136,\n            \"long\": 46.6753\n        }\n    },\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones"
+							]
+						},
+						"description": "Create a new province zone\n\n**Method:** storeProvinceZone\n\n**Required Fields:**\n- province_id: Province ID (must exist)\n- zone_name: Zone name in English\n- zone_name_ar: Zone name in Arabic\n- delivery_fee_per_km: Delivery fee per kilometer (numeric, min: 0)\n- service_fee: Service fee (numeric, min: 0)\n- service_fee_type: 'fixed' or 'percentage'\n- type: 'circle' or 'polygon'\n- points: JSON string or object with zone geometry\n- status: Boolean\n\n**Points Format:**\n- For circle: {\"radius\": \"50\", \"point\": {\"lat\": 24.7136, \"long\": 46.6753}}\n- For polygon: [{\"lat\": 24.7136, \"long\": 46.6753}, ...]"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Zone (Polygon)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"province_id\": 1,\n    \"zone_name\": \"Central Zone\",\n    \"zone_name_ar\": \"المنطقة الوسطى\",\n    \"delivery_fee_per_km\": 20,\n    \"service_fee\": 15,\n    \"service_fee_type\": \"percentage\",\n    \"type\": \"polygon\",\n    \"points\": [\n        {\n            \"lat\": 24.7136,\n            \"long\": 46.6753\n        },\n        {\n            \"lat\": 24.8136,\n            \"long\": 46.7753\n        },\n        {\n            \"lat\": 24.8136,\n            \"long\": 46.5753\n        },\n        {\n            \"lat\": 24.6136,\n            \"long\": 46.5753\n        }\n    ],\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones"
+							]
+						},
+						"description": "Create a new province zone with polygon type\n\n**Method:** storeProvinceZone\n\n**Example with polygon points array**"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Zone",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"zone_name\": \"North Zone Updated\",\n    \"zone_name_ar\": \"المنطقة الشمالية محدثة\",\n    \"delivery_fee_per_km\": 20,\n    \"service_fee\": 12,\n    \"service_fee_type\": \"fixed\",\n    \"type\": \"circle\",\n    \"points\": {\n        \"radius\": \"60\",\n        \"point\": {\n            \"lat\": 24.7136,\n            \"long\": 46.6753\n        }\n    },\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones/{zone_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones",
+								"{zone_id}"
+							],
+							"variable": [
+								{
+									"key": "zone_id",
+									"value": "1",
+									"description": "Zone ID"
+								}
+							]
+						},
+						"description": "Update an existing province zone\n\n**Method:** updateProvinceZone\n\n**Fields:**\n- province_id: Province ID\n- zone_name: Zone name in English\n- zone_name_ar: Zone name in Arabic\n- delivery_fee_per_km: Delivery fee per kilometer\n- service_fee: Service fee\n- service_fee_type: 'fixed' or 'percentage'\n- type: 'circle' or 'polygon'\n- points: JSON string or object\n- status: Boolean"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Zone",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones/{zone_id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones",
+								"{zone_id}"
+							],
+							"variable": [
+								{
+									"key": "zone_id",
+									"value": "1",
+									"description": "Zone ID"
+								}
+							]
+						},
+						"description": "Delete a province zone\n\n**Method:** destroyProvinceZone"
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Zone Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/provinces/zones/{zone_id}/toggle-status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"provinces",
+								"zones",
+								"{zone_id}",
+								"toggle-status"
+							],
+							"variable": [
+								{
+									"key": "zone_id",
+									"value": "1",
+									"description": "Zone ID"
+								}
+							]
+						},
+						"description": "Toggle zone status (activate/deactivate)\n\n**Method:** toggleProvinceZoneStatus\n\n**Response:** Returns updated zone with toggled status"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

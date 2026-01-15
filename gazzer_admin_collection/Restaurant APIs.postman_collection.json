@@ -1,0 +1,1807 @@
+{
+	"info": {
+		"_postman_id": "6b36329f-431d-460a-9722-499cde2d66bb",
+		"name": "Restaurant APIs",
+		"description": "API collection for Restaurant module with complete CRUD operations and all database fields including lat/long coordinates.\n\nUpdated: 2026-01-14\n\nAll field names match database column names. Restaurants use the stores table with is_restaurant = 1.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49589172",
+		"_collection_link": "https://www.postman.com/tkgazar1-3778123/workspace/admin-gazzer/collection/49589172-6b36329f-431d-460a-9722-499cde2d66bb?action=share&source=collection_link&creator=49589172"
+	},
+	"item": [
+		{
+			"name": "Toggle Restaurant Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/toggle-status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"toggle-status"
+					]
+				},
+				"description": "Toggle restaurant status. If restaurant is active (is_active = true), it will be deactivated (is_active = false). If restaurant is inactive (is_active = false), it will be activated (is_active = true).\n\n**Method:** toggleRestaurantStatus"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bulk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurants\": [\n        {\n            \"name\": \"Bulk Restaurant 1\",\n            \"name_ar\": \"مطعم مجمع 1\",\n            \"vendor_id\": 1,\n            \"category_id\": 1,\n            \"is_active\": true\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/bulk",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"bulk"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\BulkRestaurantController@bulkStore\n\n**Method:** bulkStore"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bulk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 1,\n    \"items\": [\n        {\n            \"name\": \"Bulk Plate 1\",\n            \"name_ar\": \"طبق مجمع 1\",\n            \"plate_category_id\": 1,\n            \"price\": 30,\n            \"is_available\": true\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/items/bulk",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"items",
+						"bulk"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\BulkRestaurantItemController@bulkStore\n\n**Method:** bulkStore"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Import Excel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "Excel file (.xlsx, .xls)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurant-items/import-excel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurant-items",
+						"import-excel"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@uploadExcel\n\n**Method:** uploadExcel"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Import Excel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "Excel file (.xlsx, .xls)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/import-excel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"import-excel"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@uploadExcel\n\n**Method:** uploadExcel"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Plate Categories",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Plate Category\",\n    \"name_ar\": \"فئة طبق جديدة\",\n    \"description\": \"Category description\",\n    \"parent_id\": null,\n    \"is_active\": true,\n    \"sort_order\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@store\n\n**Method:** store"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Plates",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sample Plate\",\n    \"name_ar\": \"طبق نموذجي\",\n    \"description\": \"Delicious plate description\",\n    \"description_ar\": \"وصف طبق لذيذ\",\n    \"plate_category_id\": 1,\n    \"price\": 45,\n    \"preparation_time\": 20,\n    \"is_available\": true,\n    \"calories\": 500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@createPlate\n\n**Method:** createPlate"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Restaurants",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "store_name",
+							"value": "Sample Restaurant",
+							"description": "Restaurant name (English) - Required, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "store_name_ar",
+							"value": "مطعم نموذجي",
+							"description": "Restaurant name (Arabic) - Required, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "vendor_id",
+							"value": "1",
+							"description": "Vendor ID - Required, must exist in vendors table",
+							"type": "text"
+						},
+						{
+							"key": "store_category_id",
+							"value": "1",
+							"description": "Store category ID - Required, must exist in store_categories table and be restaurant type",
+							"type": "text"
+						},
+						{
+							"key": "province_zone_id",
+							"value": "1",
+							"description": "Province zone ID - Required, must exist in province_zones table",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "123 Restaurant Street",
+							"description": "Address (English) - Required, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "address_ar",
+							"value": "شارع المطعم 123",
+							"description": "Address (Arabic) - Required, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Downtown Area",
+							"description": "Location description - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "24.7136",
+							"description": "Latitude - Optional, between -90 and 90",
+							"type": "text"
+						},
+						{
+							"key": "long",
+							"value": "46.6753",
+							"description": "Longitude - Optional, between -180 and 180",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "John Doe",
+							"description": "Contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"description": "Is active - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_24_hours",
+							"value": "0",
+							"description": "Is 24 hours - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_closed",
+							"value": "0",
+							"description": "Is closed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_busy",
+							"value": "0",
+							"description": "Is busy - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "online_payment_allowed",
+							"value": "1",
+							"description": "Online payment allowed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "5",
+							"description": "Restaurant rating - Optional, numeric 0-5, default 5",
+							"type": "text"
+						},
+						{
+							"key": "rate_count",
+							"value": "0",
+							"description": "Rating count - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "max_delivery_time",
+							"value": "60",
+							"description": "Max delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "min_delivery_time",
+							"value": "30",
+							"description": "Min delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "work_from",
+							"value": "10:00",
+							"description": "Work start time - Optional, format H:i (e.g., 10:00)",
+							"type": "text"
+						},
+						{
+							"key": "work_to",
+							"value": "22:00",
+							"description": "Work end time - Optional, format H:i, must be after work_from",
+							"type": "text"
+						},
+						{
+							"key": "scheduling_slot_interval",
+							"value": "30",
+							"description": "Scheduling slot interval in minutes - Optional, integer, min 1, default 30",
+							"type": "text"
+						},
+						{
+							"key": "closing_alert_appear_before",
+							"value": "30",
+							"description": "Closing alert appear before in minutes - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "[\"tag1\", \"tag2\"]",
+							"description": "Tags array - Optional, JSON array of strings",
+							"type": "text"
+						},
+						{
+							"key": "item_categories",
+							"value": "[1, 2, 3]",
+							"description": "Item categories IDs array - Optional, JSON array of item category IDs",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Restaurant image - Optional, image file (jpeg, png, jpg, gif), max 2MB",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants"
+					]
+				},
+				"description": "Create a new restaurant. All field names match database column names. Restaurants use the stores table with is_restaurant = 1.\n\n**Required fields:**\n- store_name (max 50 chars)\n- store_name_ar (max 50 chars)\n- vendor_id (must exist)\n- store_category_id (must exist, must be restaurant type)\n- address (max 255 chars)\n- address_ar (max 255 chars)\n- province_zone_id (must exist)\n\n**Optional fields:**\n- lat, long (coordinates)\n- location, contact_person\n- is_active, is_24_hours, is_closed, is_busy, online_payment_allowed\n- rate (0-5), rate_count\n- max_delivery_time, min_delivery_time\n- work_from, work_to (H:i format)\n- scheduling_slot_interval, closing_alert_appear_before\n- tags (JSON array), item_categories (JSON array)\n- image (file upload)"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restaurants/{restaurant}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restaurants",
+						"{restaurant}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@destroy\n\n**Method:** destroy"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Plate Categories",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories/{category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories",
+						"{category_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@destroy\n\n**Method:** destroy"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Plates",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/{plate_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"{plate_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@deletePlate\n\n**Method:** deletePlate"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurants",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@deleteRestaurant\n\n**Method:** deleteRestaurant"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restaurants"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number for pagination",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Number of items per page (default: 15)",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query (searches in store_name, store_name_ar, address, address_ar)",
+							"disabled": true
+						},
+						{
+							"key": "store_category_id",
+							"value": "",
+							"description": "Filter by store category ID",
+							"disabled": true
+						},
+						{
+							"key": "vendor_id",
+							"value": "",
+							"description": "Filter by vendor ID",
+							"disabled": true
+						},
+						{
+							"key": "is_active",
+							"value": "",
+							"description": "Filter by active status (true/false)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get all restaurants with pagination and filtering options.\n\n**Query Parameters:**\n- page: Page number\n- per_page: Items per page (default: 15)\n- search: Search in restaurant name and address\n- store_category_id: Filter by category\n- vendor_id: Filter by vendor\n- is_active: Filter by active status"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates/categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates",
+						"categories"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@getPlateCategoriesByRestaurantId\n\n**Method:** getPlateCategoriesByRestaurantId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/category/{category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"category",
+						"{category_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getRestaurantsByCategoryId\n\n**Method:** getRestaurantsByCategoryId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates/category/{plate_category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates",
+						"category",
+						"{plate_category_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@getPlatesByRestaurantIdAndPlateCategoryId\n\n**Method:** getPlatesByRestaurantIdAndPlateCategoryId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Grouped",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates/sub-categories/grouped",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates",
+						"sub-categories",
+						"grouped"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@getSubCategoriesWithPlatesByRestaurantId\n\n**Method:** getSubCategoriesWithPlatesByRestaurantId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Has Offers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/category/{category_id}/has-offers",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"category",
+						"{category_id}",
+						"has-offers"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getRestaurantsHasOffersInCategory\n\n**Method:** getRestaurantsHasOffersInCategory"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Import Template",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurant-items/import-template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurant-items",
+						"import-template"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@downloadTemplate\n\n**Method:** downloadTemplate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Import Template",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/import-template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"import-template"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@downloadTemplate\n\n**Method:** downloadTemplate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ordered With",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/{plate_id}/ordered-with",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"{plate_id}",
+						"ordered-with"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@getPlateOrderedWith\n\n**Method:** getPlateOrderedWith"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Plate Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Items per page",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "Sort field",
+							"disabled": true
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "Sort direction (asc/desc)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@index\n\n**Method:** index"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Plate Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories/{category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories",
+						"{category_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@show\n\n**Method:** show"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Plate Sub Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-sub-categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-sub-categories"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@getPlateSubCategories\n\n**Method:** getPlateSubCategories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Plates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/{plate_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"{plate_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@getPlateById\n\n**Method:** getPlateById"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Plates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@getPlatesByRestaurantId\n\n**Method:** getPlatesByRestaurantId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reports",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/reports",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2026-01-01",
+							"description": "Report start date",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2026-12-31",
+							"description": "Report end date",
+							"disabled": true
+						},
+						{
+							"key": "group_by",
+							"value": "day",
+							"description": "Group by (day/week/month)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getReports\n\n**Method:** getReports"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "Items per page",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "",
+							"description": "Search query",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "Sort field",
+							"disabled": true
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "Sort direction (asc/desc)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getAllRestaurants\n\n**Method:** getAllRestaurants"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getRestaurantById\n\n**Method:** getRestaurantById"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Statistics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/statistics",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"statistics"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2026-01-01",
+							"description": "Start date for statistics",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2026-12-31",
+							"description": "End date for statistics",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getStatistics\n\n**Method:** getStatistics"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Top Rated",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/category/{category_id}/top-rated",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"category",
+						"{category_id}",
+						"top-rated"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@getTopRatedRestaurantsInCategory\n\n**Method:** getTopRatedRestaurantsInCategory"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Top Rated",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}/plates/top-rated",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}",
+						"plates",
+						"top-rated"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@getTopRatedPlatesByRestaurantId\n\n**Method:** getTopRatedPlatesByRestaurantId"
+			},
+			"response": []
+		},
+		{
+			"name": "Get With Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories/with-restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories",
+						"with-restaurants"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@getPlateCategoriesWithRestaurants\n\n**Method:** getPlateCategoriesWithRestaurants"
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"value": "",
+							"description": "Image file (optional)",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/restaurants/{restaurant}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"restaurants",
+						"{restaurant}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantController@update\n\n**Method:** update"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Plate Categories",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updated Plate Category\",\n    \"name_ar\": \"فئة طبق محدثة\",\n    \"is_active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plate-categories/{category_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plate-categories",
+						"{category_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\PlateCategoryController@update\n\n**Method:** update"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Plates",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updated Plate\",\n    \"price\": 50,\n    \"is_available\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/plates/{plate_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"plates",
+						"{plate_id}"
+					]
+				},
+				"description": "Modules\\Restaurant\\Http\\Controllers\\RestaurantPlateController@updatePlate\n\n**Method:** updatePlate"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Restaurants",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "store_name",
+							"value": "Updated Restaurant",
+							"description": "Restaurant name (English) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "store_name_ar",
+							"value": "مطعم محدث",
+							"description": "Restaurant name (Arabic) - Optional, max 50 characters",
+							"type": "text"
+						},
+						{
+							"key": "vendor_id",
+							"value": "1",
+							"description": "Vendor ID - Optional, must exist in vendors table",
+							"type": "text"
+						},
+						{
+							"key": "store_category_id",
+							"value": "1",
+							"description": "Store category ID - Optional, must exist in store_categories table and be restaurant type",
+							"type": "text"
+						},
+						{
+							"key": "province_zone_id",
+							"value": "1",
+							"description": "Province zone ID - Optional, must exist in province_zones table",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "456 Updated Street",
+							"description": "Address (English) - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "address_ar",
+							"value": "شارع محدث 456",
+							"description": "Address (Arabic) - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Updated Location",
+							"description": "Location description - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "24.7136",
+							"description": "Latitude - Optional, between -90 and 90",
+							"type": "text"
+						},
+						{
+							"key": "long",
+							"value": "46.6753",
+							"description": "Longitude - Optional, between -180 and 180",
+							"type": "text"
+						},
+						{
+							"key": "contact_person",
+							"value": "Jane Doe",
+							"description": "Contact person name - Optional, max 255 characters",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "1",
+							"description": "Is active - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_24_hours",
+							"value": "0",
+							"description": "Is 24 hours - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_closed",
+							"value": "0",
+							"description": "Is closed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "is_busy",
+							"value": "0",
+							"description": "Is busy - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "online_payment_allowed",
+							"value": "1",
+							"description": "Online payment allowed - Optional, boolean (0 or 1)",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "4.5",
+							"description": "Restaurant rating - Optional, numeric 0-5",
+							"type": "text"
+						},
+						{
+							"key": "rate_count",
+							"value": "10",
+							"description": "Rating count - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "max_delivery_time",
+							"value": "45",
+							"description": "Max delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "min_delivery_time",
+							"value": "20",
+							"description": "Min delivery time in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "work_from",
+							"value": "09:00",
+							"description": "Work start time - Optional, format H:i",
+							"type": "text"
+						},
+						{
+							"key": "work_to",
+							"value": "21:00",
+							"description": "Work end time - Optional, format H:i, must be after work_from",
+							"type": "text"
+						},
+						{
+							"key": "scheduling_slot_interval",
+							"value": "30",
+							"description": "Scheduling slot interval in minutes - Optional, integer, min 1",
+							"type": "text"
+						},
+						{
+							"key": "closing_alert_appear_before",
+							"value": "30",
+							"description": "Closing alert appear before in minutes - Optional, integer, min 0",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "[\"updated\", \"tag\"]",
+							"description": "Tags array - Optional, JSON array of strings",
+							"type": "text"
+						},
+						{
+							"key": "item_categories",
+							"value": "[1, 2]",
+							"description": "Item categories IDs array - Optional, JSON array of item category IDs",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"description": "Restaurant image - Optional, image file (jpeg, png, jpg, gif), max 2MB",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/{restaurant_id}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"{restaurant_id}"
+					]
+				},
+				"description": "Update an existing restaurant. All field names match database column names. All fields are optional for update.\n\n**Available fields:**\n- store_name, store_name_ar (max 50 chars each)\n- vendor_id, store_category_id, province_zone_id\n- address, address_ar (max 255 chars each)\n- location, contact_person\n- lat, long (coordinates)\n- is_active, is_24_hours, is_closed, is_busy, online_payment_allowed\n- rate (0-5), rate_count\n- max_delivery_time, min_delivery_time\n- work_from, work_to (H:i format)\n- scheduling_slot_interval, closing_alert_appear_before\n- tags (JSON array), item_categories (JSON array)\n- image (file upload)"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

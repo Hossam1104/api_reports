@@ -422,6 +422,7 @@ header {
     align-items: center;
     gap: 8px;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .toggle-all:hover {

@@ -405,20 +405,6 @@ Inside an API report you’ll find:
 
 ✔ No setup required
 
-🖥 Option 2: Run via Local Server (Optional)
-
-If your browser restricts local files:
-
-# Python
-python -m http.server 8080
-
-# Node.js
-npx serve .
-
-
-Then open:
-
-http://localhost:8080
 
 ➕ How to Add a New API Report
 

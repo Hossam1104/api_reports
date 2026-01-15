@@ -1,0 +1,121 @@
+SECTION 1 — ROLE & CONTEXT
+
+Act as a Principal Automation Quality Engineer, generating REAL API testing data for an EXISTING, FINALIZED REPORT TEMPLATE already integrated with a dashboard.
+
+⚠️ This task is DATA GENERATION ONLY
+⚠️ The UI and logic are FINAL and MUST NOT be changed
+⚠️ Output will be used directly in production
+
+SECTION 2 — API UNDER TEST (SOURCE OF TRUTH)
+
+- API name : (Generic Items)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Items (Admin) (GET): /catalog/items
+    Get Item by ID (Admin) (GET): /catalog/items/{id}
+    Create Item (POST): //catalog/items
+    Update Item (PUT / PATCH): /catalog/items/{id}
+    Delete Item (DELETE): /catalog/items/{id}
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODUxNzU0NSwiZXhwIjoxNzY4ODA1NTQ1LCJuYmYiOjE3Njg1MTc1NDUsImp0aSI6IkNBNDAyUHNSdXF3RXZIV3oiLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.zu63xqQd8gNfjbKZV8LU1Ytg9C-ODd6iiD6EjoAjK4A
+
+
+SECTION 3 — FILES PROVIDED
+
+You are given unchanged, final files:
+
+index.html (DO NOT MODIFY)
+
+styles.css (DO NOT MODIFY)
+
+script.js (DO NOT MODIFY)
+
+You MUST generate data for:
+
+report-data.js (EMPTY, MUST BE POPULATED)
+
+SECTION 4 — ABSOLUTE IMMUTABILITY RULES
+
+❌ YOU MUST NOT:
+
+Output index.html
+
+Output styles.css
+
+Output script.js
+
+Change logic, IDs, or structure
+
+Modify window.REPORT_SUMMARY logic
+
+✅ YOU MAY ONLY:
+
+Output report-data.js
+
+Populate window.REPORT_DATA
+
+Any other output is INVALID.
+
+SECTION 5 — report-data.js STRUCTURE (STRICT)
+
+You MUST output a SINGLE FILE defining:
+
+window.REPORT_DATA = {
+  meta: {
+    apiName: "Authentication",
+    folderName: "Authentication",
+    isTemplate: false,
+    baseUrl,
+    environment,
+    authentication,
+    executedBy: "Hossam Mohamed",
+    executedByTitle: "Senior Software QA Engineer",
+    createdAt
+  },
+  testCases: [ ... ]
+};
+
+SECTION 6 — TEST CASE RULES
+
+Generate ~100 test cases (≤150)
+
+Use ONLY the provided endpoints.
+
+Realistic request/response bodies
+
+status = passed | failed | skipped
+
+bugDetails ONLY when failed
+
+SECTION 7 — DASHBOARD COMPATIBILITY (CRITICAL)
+
+The following MUST be TRUE after script.js runs:
+
+window.REPORT_SUMMARY is populated
+
+isTemplate === false
+
+totalTests === testCases.length
+
+successRate derived from data
+
+folderName matches the report folder
+
+SECTION 8 — OUTPUT RULE (FINAL)
+
+🚫 Output ONLY:
+
+report-data.js
+
+The file MUST:
+
+Run immediately
+
+Populate the report
+
+Appear in the dashboard after the scan.
+
+🔚 END OF PROMPT

@@ -1101,7 +1101,7 @@ function updateEmptyStateVisibility() {
 }
 
 window.toggleTestDetails = function (testCaseId) {
-    if (IS_TEMPLATE_MODE) return;
+    // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
     const details = document.getElementById(`details-${testCaseId}`);
     const chevron = document.getElementById(`chevron-${testCaseId}`);
     if (details && chevron) {
@@ -1111,7 +1111,7 @@ window.toggleTestDetails = function (testCaseId) {
 };
 
 window.toggleBugDetails = function (bugIndex) {
-    if (IS_TEMPLATE_MODE) return;
+    // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
     const details = document.getElementById(`bug-details-${bugIndex}`);
     const chevron = document.getElementById(`bug-chevron-${bugIndex}`);
     if (details && chevron) {
@@ -1128,7 +1128,7 @@ function setupEventListeners() {
     // Toggle all test details
     if (toggleAllBtn) {
         toggleAllBtn.addEventListener('click', () => {
-            if (IS_TEMPLATE_MODE) return;
+            // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
             allExpanded = !allExpanded;
             const chevrons = document.querySelectorAll('.test-case-header i');
             const details = document.querySelectorAll('.test-case-details');
@@ -1154,7 +1154,7 @@ function setupEventListeners() {
     // Toggle all bug details
     if (toggleAllBugsBtn) {
         toggleAllBugsBtn.addEventListener('click', () => {
-            if (IS_TEMPLATE_MODE) return;
+            // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
 
             allBugsExpanded = !allBugsExpanded;
             const chevrons = document.querySelectorAll('.bug-header i');
@@ -1173,15 +1173,15 @@ function setupEventListeners() {
             });
 
             toggleAllBugsBtn.innerHTML = allBugsExpanded
-                ? '<i class="fas fa-compress-alt"></i> Collapse All Bug Details'
-                : '<i class="fas fa-expand-alt"></i> Expand All Bug Details';
+                ? '<i class="fas fa-compress-alt"></i>Collapse All Bug Details'
+                : '<i class="fas fa-expand-alt"></i>Expand All Bug Details';
         });
     }
 
     // Filter test cases
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            if (IS_TEMPLATE_MODE) return;
+            // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
 
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
@@ -1193,7 +1193,7 @@ function setupEventListeners() {
     // Search functionality
     if (searchBox) {
         searchBox.addEventListener('input', () => {
-            if (IS_TEMPLATE_MODE) return;
+            // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
 
             searchTerm = searchBox.value.trim();
             renderTestCases();
@@ -1290,7 +1290,7 @@ function setupEventListeners() {
     }
 
     window.showTestCaseModal = function (testCase) {
-        if (IS_TEMPLATE_MODE) return;
+        // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
 
         modalTitle.textContent = `Test Case: ${testCase.id}`;
 
@@ -1382,18 +1382,9 @@ function validateReportSummary() {
 // INITIALIZE ON LOAD
 // ============================
 
-document.addEventListener('DOMContentLoaded', function () {
-    console.log("DOM fully loaded, initializing report...");
+// Duplicate DOMContentLoaded listener removed to prevent double initialization
+// See the enhanced listener below around line 1434
 
-    // Add defensive validation IMMEDIATELY
-    validateReportSummary();
-
-    // Initialize report (now safe)
-    initializeReport();
-
-    // Log readiness for dashboard
-    console.log("REPORT_SUMMARY ready for dashboard consumption:", window.REPORT_SUMMARY);
-});
 
 // Emergency fallback: If for some reason the report isn't ready,
 // ensure REPORT_SUMMARY is still available

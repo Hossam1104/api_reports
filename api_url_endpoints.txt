@@ -39,3 +39,20 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F
 
 - Authentication details (token / header): Bearer Token:
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODUxNzU0NSwiZXhwIjoxNzY4ODA1NTQ1LCJuYmYiOjE3Njg1MTc1NDUsImp0aSI6IkNBNDAyUHNSdXF3RXZIV3oiLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.zu63xqQd8gNfjbKZV8LU1Ytg9C-ODd6iiD6EjoAjK4A
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Item Categories)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Categories (Admin) (GET): /catalog/item-categories
+    Get Category by ID (Admin) (GET): /catalog/item-categories/{id}
+    Get Categories by Store Category (Admin) (GET): /catalog/item-categories/store-category/{id}
+    Create Category (POST): //catalog/item-categories
+    Update Category (PUT / PATCH): /catalog/item-categories/{id}
+    Delete Category (DELETE): /catalog/item-categories/{id}
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODUxNzU0NSwiZXhwIjoxNzY4ODA1NTQ1LCJuYmYiOjE3Njg1MTc1NDUsImp0aSI6IkNBNDAyUHNSdXF3RXZIV3oiLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.zu63xqQd8gNfjbKZV8LU1Ytg9C-ODd6iiD6EjoAjK4A

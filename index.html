@@ -685,10 +685,13 @@
             <div class="section-header">
                 <h2>API Testing Reports</h2>
                 <div class="section-actions">
+                    <a href="./report_template/index.html" class="action-btn secondary" target="_blank"
+                        style="text-decoration: none;">
+                        <i class="fas fa-file-alt"></i> View Empty Template
+                    </a>
                     <button class="action-btn secondary" id="scan-folders">
                         <i class="fas fa-sync-alt"></i> Scan for Reports
                     </button>
-
                 </div>
             </div>
 
@@ -803,7 +806,7 @@
 
                 // Try to discover other API folders
                 const potentialFolders = [
-                    'Authentication', 'Banners', 'Generic Items'
+                    'Authentication', 'Banners', 'Generic Items', 'Item Categories'
                 ];
 
                 console.log('📁 Checking potential folders:', potentialFolders);
@@ -1012,9 +1015,8 @@
                                 </div>
                             </div>
                             ` : ''}
-                            <a href="${report.reportUrl}" 
-                               class="view-report-btn ${isTemplate ? 'template' : ''}"
-                               ${isTemplate ? 'target="_blank"' : ''}>
+                            <a href="${report.reportUrl}" target="_blank"
+                               class="view-report-btn ${isTemplate ? 'template' : ''}">
                                 <i class="fas fa-external-link-alt"></i>
                                 ${isTemplate ? 'View Template' : 'View Report'}
                             </a>

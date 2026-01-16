@@ -8,15 +8,16 @@ Act as a Principal Automation Quality Engineer, generating REAL API testing data
 
 SECTION 2 — API UNDER TEST (SOURCE OF TRUTH)
 
-- API name : (Generic Items)
+- API name : (Item Categories)
 - Base URL: "https://admin-backend.gazzertest.cloud/api"
 
 - endpoints:
-    Get All Items (Admin) (GET): /catalog/items
-    Get Item by ID (Admin) (GET): /catalog/items/{id}
-    Create Item (POST): //catalog/items
-    Update Item (PUT / PATCH): /catalog/items/{id}
-    Delete Item (DELETE): /catalog/items/{id}
+    Get All Categories (Admin) (GET): /catalog/item-categories
+    Get Category by ID (Admin) (GET): /catalog/item-categories/{id}
+    Get Categories by Store Category (Admin) (GET): /catalog/item-categories/store-category/{id}
+    Create Category (POST): //catalog/item-categories
+    Update Category (PUT / PATCH): /catalog/item-categories/{id}
+    Delete Category (DELETE): /catalog/item-categories/{id}
 
 
 - Authentication details (token / header): Bearer Token:

@@ -30,7 +30,7 @@ MODERN COMPACT UI ENHANCEMENTS
 
 /* ADDED: Layout container for consistent padding */
 .layout-container {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 20px;
     width: 100%;
@@ -186,7 +186,7 @@ header {
 /* Compact test cases container */
 .test-cases-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -526,7 +526,7 @@ header {
 
 .bugs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
 }

@@ -4,197 +4,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gazzer API Test Report</title>
+    <title>Template API Test Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Glassmorphism & gradient styles -->
+    <script>
+        // Force CSS reload to prevent caching issues
+        document.write('<link rel="stylesheet" href="styles.css?v=' + new Date().getTime() + '">');
+    </script>
 
-    <!-- CRITICAL SCRIPT LOAD ORDER (SIMPLIFIED) -->
-    <!-- 1. report-data.js - Unified data source -->
-    <!-- 2. script.js - Main logic (reads report-data.js) -->
-    <!-- Dashboard reads window.REPORT_SUMMARY after all scripts load -->
 </head>
 
 <body>
-    <!-- ADDED: Layout container for consistent padding -->
-    <div class="layout-container">
-        <div class="container">
-            <!-- Enhanced Header -->
-            <header>
+    <!-- Background decoration elements -->
+    <div class="bg-decoration">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})" style="cursor: pointer;">
+                <i class="fas fa-cube"></i>
+            </div>
+            <ul class="nav-links">
+
+                <li>
+                    <a href="#api-details" class="nav-item" title="API Details">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#dashboard" class="nav-item active" title="Dashboard">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#test-cases" class="nav-item" title="Test Cases">
+                        <i class="fas fa-vial"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#bugs" class="nav-item" title="Bugs">
+                        <i class="fas fa-bug"></i>
+                    </a>
+                </li>
+                <li>
+                <li>
+                    <a href="#data" class="nav-item" title="Test Data">
+                        <i class="fas fa-database"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#critical-issues" class="nav-item" title="Critical Issues">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#qa-verdict" class="nav-item" title="QA Verdict">
+                        <i class="fas fa-clipboard-check"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#recommendations" class="nav-item" title="Recommendations">
+                        <i class="fas fa-list-check"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content-wrapper">
+            <!-- Enhanced Header with Glassmorphism -->
+            <header class="glass-header">
                 <div class="header-content">
                     <div class="header-title">
-                        <h1><i class="fas fa-bug"></i> API Test Report - <span id="apiNamePlaceholder">API Name</span>
-                        </h1>
+                        <div class="api-badge">
+                            <i class="fas fa-bug"></i>
+                            <span>API REPORT</span>
+                        </div>
+                        <div class="title-container">
+                            <h1><span id="apiNamePlaceholder">API Name</span> Test Report</h1>
+                            <img src="../Logo.png" class="header-logo" alt="Gazzar Logo">
+                        </div>
                         <div class="subtitle" id="reportSubtitlePlaceholder">
                             <i class="fas fa-chart-line"></i>
-                            Comprehensive quality assessment report
+                            Comprehensive quality assessment dashboard
                         </div>
                     </div>
-                    <div class="report-meta">
+                    <div class="report-meta glass-card">
                         <div class="meta-item">
-                            <span class="meta-value" id="passedTests">0</span>
-                            <span class="meta-label">
-                                <i class="fas fa-check-circle"></i> Passed Tests
-                            </span>
+                            <div class="meta-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="meta-content">
+                                <span class="meta-value" id="passedTests">0</span>
+                                <span class="meta-label">Passed Tests</span>
+                            </div>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-value" id="failedTests">0</span>
-                            <span class="meta-label">
-                                <i class="fas fa-times-circle"></i> Failed Tests
-                            </span>
+                            <div class="meta-icon">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="meta-content">
+                                <span class="meta-value" id="failedTests">0</span>
+                                <span class="meta-label">Failed Tests</span>
+                            </div>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-value" id="criticalBugs">0</span>
-                            <span class="meta-label">
-                                <i class="fas fa-exclamation-triangle"></i> Critical Bugs
-                            </span>
+                            <div class="meta-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="meta-content">
+                                <span class="meta-value" id="criticalBugs">0</span>
+                                <span class="meta-label">Critical Bugs</span>
+                            </div>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-value" id="totalTests">0</span>
-                            <span class="meta-label">
-                                <i class="fas fa-vial"></i> Total Test Cases
-                            </span>
+                            <div class="meta-icon">
+                                <i class="fas fa-vial"></i>
+                            </div>
+                            <div class="meta-content">
+                                <span class="meta-value" id="totalTests">0</span>
+                                <span class="meta-label">Total Test Cases</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- Compact Stats Grid -->
+            <!-- Modern Stats Grid with Neumorphism -->
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" style="color: var(--success-color);" id="passedStats">0</div>
-                    <div class="stat-label">
-                        <i class="fas fa-check-circle"></i> Tests Passed
+                <div class="stat-card neumorphic">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" style="color: var(--success-color);" id="passedStats">0</div>
+                        <div class="stat-label">Tests Passed</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" style="color: var(--danger-color);" id="failedStats">0</div>
-                    <div class="stat-label">
-                        <i class="fas fa-times-circle"></i> Tests Failed
+                <div class="stat-card neumorphic">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" style="color: var(--danger-color);" id="failedStats">0</div>
+                        <div class="stat-label">Tests Failed</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" style="color: var(--warning-color);" id="skippedStats">0</div>
-                    <div class="stat-label">
-                        <i class="fas fa-clock"></i> Tests Skipped
+                <div class="stat-card neumorphic">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" style="color: var(--warning-color);" id="skippedStats">0</div>
+                        <div class="stat-label">Tests Skipped</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="successRate">0%</div>
-                    <div class="stat-label">
-                        <i class="fas fa-percentage"></i> Success Rate
+                <div class="stat-card neumorphic">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="successRate">0%</div>
+                        <div class="stat-label">Success Rate</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Compact API Info -->
-            <div class="api-info">
-                <h3><i class="fas fa-network-wired"></i> API Details</h3>
+            <!-- Modern API Info Cards -->
+            <div class="api-info-section" id="api-details">
+                <div class="section-header">
+                    <h2><i class="fas fa-network-wired"></i> API Details</h2>
+                    <div class="section-line"></div>
+                </div>
                 <div class="api-info-grid">
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-signature"></i> API Name
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-signature"></i>
                         </div>
-                        <div class="api-info-value" id="apiName">Not Specified</div>
+                        <div class="info-content">
+                            <h4>API Name</h4>
+                            <div class="info-value" id="apiName">Not Specified</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-link"></i> Base URL
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-link"></i>
                         </div>
-                        <div class="api-info-value" id="baseUrl">Not Specified</div>
+                        <div class="info-content">
+                            <h4>Base URL</h4>
+                            <div class="info-value" id="baseUrl">Not Specified</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-server"></i> Environment
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-server"></i>
                         </div>
-                        <div class="api-info-value" id="environment">Not Specified</div>
+                        <div class="info-content">
+                            <h4>Environment</h4>
+                            <div class="info-value" id="environment">Not Specified</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-key"></i> Authentication
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-key"></i>
                         </div>
-                        <div class="api-info-value" id="authentication">Not Specified</div>
+                        <div class="info-content">
+                            <h4>Authentication</h4>
+                            <div class="info-value" id="authentication">Not Specified</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-calendar-alt"></i> Test Date
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <div class="api-info-value" id="testDate">Not Specified</div>
+                        <div class="info-content">
+                            <h4>Test Date</h4>
+                            <div class="info-value" id="testDate">Not Specified</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-user-tie"></i> Executed By
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-plus"></i>
                         </div>
-                        <div class="api-info-value">
-                            <strong>Hossam Mohamed</strong><br>
-                            <span style="color: rgba(255,255,255,0.8);">Senior Software QA Engineer</span>
+                        <div class="info-content">
+                            <h4>Created On</h4>
+                            <div class="info-value" id="createdOn">Not Specified</div>
+                        </div>
+                    </div>
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Last Modified</h4>
+                            <div class="info-value" id="lastModifiedOn">Not Updated</div>
+                        </div>
+                    </div>
+                    <div class="info-card glass-card">
+                        <div class="info-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Executed By</h4>
+                            <div class="info-value">
+                                <strong>Hossam Mohamed</strong><br>
+                                <span class="role">Software QA Engineer</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Compact Dashboard Charts -->
-            <div class="dashboard">
-                <div class="chart-container">
-                    <canvas id="testStatusChart"></canvas>
+            <!-- Modern Dashboard Charts -->
+            <div class="dashboard-section" id="dashboard">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Analytics Dashboard</h2>
+                    <div class="section-line"></div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="severityChart"></canvas>
+                <div class="dashboard-grid">
+                    <div class="chart-container glass-card">
+                        <div class="chart-header">
+                            <div class="chart-header-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="chart-header-content">
+                                <h3>Test Status Distribution</h3>
+                                <p class="chart-subtitle">Overview of test execution results</p>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="testStatusChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(39, 174, 96, 0.8);"></span>
+                                    <span class="legend-label">Passed</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(231, 76, 60, 0.8);"></span>
+                                    <span class="legend-label">Failed</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color"
+                                        style="background-color: rgba(243, 156, 18, 0.8);"></span>
+                                    <span class="legend-label">Skipped</span>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Based on executed test cases</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container glass-card">
+                        <div class="chart-header">
+                            <div class="chart-header-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="chart-header-content">
+                                <h3>Severity Distribution</h3>
+                                <p class="chart-subtitle">Breakdown by severity level</p>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="severityChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(192, 57, 43, 0.8);"></span>
+                                    <span class="legend-label">Critical</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(231, 76, 60, 0.8);"></span>
+                                    <span class="legend-label">High</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color"
+                                        style="background-color: rgba(243, 156, 18, 0.8);"></span>
+                                    <span class="legend-label">Medium</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color"
+                                        style="background-color: rgba(127, 140, 141, 0.8);"></span>
+                                    <span class="legend-label">Low</span>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Higher severity indicates more critical issues</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container glass-card">
+                        <div class="chart-header">
+                            <div class="chart-header-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="chart-header-content">
+                                <h3>Test Categories</h3>
+                                <p class="chart-subtitle">Distribution across test types</p>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color"
+                                        style="background-color: rgba(52, 152, 219, 0.8);"></span>
+                                    <span class="legend-label">Create</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(39, 174, 96, 0.8);"></span>
+                                    <span class="legend-label">Read</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color"
+                                        style="background-color: rgba(243, 156, 18, 0.8);"></span>
+                                    <span class="legend-label">Update</span>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <i class="fas fa-layer-group"></i>
+                                <span>CRUD operations distribution</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="categoryChart"></canvas>
+            </div>
+
+            <!-- Modern Test Cases Section -->
+            <div class="test-cases-section" id="test-cases">
+                <div class="section-header">
+                    <h2><i class="fas fa-vial"></i> Test Cases</h2>
+                    <div class="section-line"></div>
+                    <span class="section-subtitle" id="totalTestsTitle">0 total</span>
+                </div>
+
+                <!-- Enhanced Filters -->
+                <div class="filters-section glass-card hidden-when-empty" style="display: none;">
+                    <div class="filters-group">
+                        <button class="filter-btn active" data-filter="all">
+                            <i class="fas fa-list"></i> All (<span id="allTestsCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="passed">
+                            <i class="fas fa-check-circle"></i> Passed (<span id="passedCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="failed">
+                            <i class="fas fa-times-circle"></i> Failed (<span id="failedCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="skipped">
+                            <i class="fas fa-clock"></i> Skipped (<span id="skippedCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="critical">
+                            <i class="fas fa-exclamation-triangle"></i> Critical (<span id="criticalCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="high">
+                            <i class="fas fa-exclamation-circle"></i> High (<span id="highCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="medium">
+                            <i class="fas fa-exclamation"></i> Medium (<span id="mediumCount">0</span>)
+                        </button>
+                        <button class="filter-btn" data-filter="low">
+                            <i class="fas fa-info-circle"></i> Low (<span id="lowCount">0</span>)
+                        </button>
+                    </div>
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-box" id="searchBox" placeholder="Search test cases...">
+                    </div>
+                </div>
+
+                <button class="toggle-all-btn glass-btn hidden-when-empty" id="toggleAllBtn" style="display: none;">
+                    <i class="fas fa-expand-alt"></i> Expand All Test Details
+                </button>
+
+                <div class="test-cases-grid" id="test-cases-container">
+                    <!-- Test cases will be rendered here -->
                 </div>
             </div>
 
             <!-- Enhanced Bugs Section -->
-            <h2 class="section-title hidden-when-empty" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i>
-                Bugs to be Solved
-                <span class="section-subtitle" id="bug-summary-subtitle"></span>
-            </h2>
+            <div class="bugs-section glass-section" id="bugs" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Bugs to be Solved</h2>
+                    <div class="section-line"></div>
+                    <span class="section-subtitle" id="bug-summary-subtitle"></span>
+                </div>
 
-            <div class="bugs-section" style="display: none;">
                 <!-- Bug Statistics Bar -->
-                <div class="bugs-grid hidden-when-empty">
-                    <div class="bug-stat">
-                        <span class="bug-priority p0">
-                            <span class="bug-priority-indicator p0"></span>
-                            P0 (Critical):
-                        </span>
-                        <span id="p0-bug-count">0</span>
+                <div class="bug-stats-grid">
+                    <div class="bug-stat-card critical">
+                        <div class="bug-stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="bug-stat-content">
+                            <div class="bug-stat-value" id="p0-bug-count">0</div>
+                            <div class="bug-stat-label">P0 (Critical)</div>
+                        </div>
                     </div>
-                    <div class="bug-stat">
-                        <span class="bug-priority p1">
-                            <span class="bug-priority-indicator p1"></span>
-                            P1 (High):
-                        </span>
-                        <span id="p1-bug-count">0</span>
+                    <div class="bug-stat-card high">
+                        <div class="bug-stat-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="bug-stat-content">
+                            <div class="bug-stat-value" id="p1-bug-count">0</div>
+                            <div class="bug-stat-label">P1 (High)</div>
+                        </div>
                     </div>
-                    <div class="bug-stat">
-                        <span class="bug-priority p2">
-                            <span class="bug-priority-indicator p2"></span>
-                            P2 (Medium):
-                        </span>
-                        <span id="p2-bug-count">0</span>
+                    <div class="bug-stat-card medium">
+                        <div class="bug-stat-icon">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="bug-stat-content">
+                            <div class="bug-stat-value" id="p2-bug-count">0</div>
+                            <div class="bug-stat-label">P2 (Medium)</div>
+                        </div>
                     </div>
-                    <div class="bug-stat">
-                        <span class="bug-priority p3">
-                            <span class="bug-priority-indicator p3"></span>
-                            P3 (Low):
-                        </span>
-                        <span id="p3-bug-count">0</span>
+                    <div class="bug-stat-card low">
+                        <div class="bug-stat-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="bug-stat-content">
+                            <div class="bug-stat-value" id="p3-bug-count">0</div>
+                            <div class="bug-stat-label">P3 (Low)</div>
+                        </div>
                     </div>
-                    <div class="bug-stat">
-                        <span style="font-weight: bold;">
-                            <i class="fas fa-bug"></i> Total Bugs:
-                        </span>
-                        <span id="total-bug-count">0</span>
+                    <div class="bug-stat-card total">
+                        <div class="bug-stat-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="bug-stat-content">
+                            <div class="bug-stat-value" id="total-bug-count">0</div>
+                            <div class="bug-stat-label">Total Bugs</div>
+                        </div>
                     </div>
                 </div>
 
-                <button class="toggle-all hidden-when-empty mt-5" id="toggleAllBugsBtn" style="display: none;">
-                    <i class="fas fa-expand-alt"></i>Expand All Bug Details
+                <button class="toggle-all-btn glass-btn hidden-when-empty" id="toggleAllBugsBtn" style="display: none;">
+                    <i class="fas fa-expand-alt"></i> Expand All Bug Details
                 </button>
 
                 <div class="bugs-grid" id="bugs-grid">
@@ -202,263 +499,365 @@
                 </div>
             </div>
 
-            <!-- Enhanced Test Cases Section -->
-            <h2 class="section-title">
-                <i class="fas fa-vial"></i>
-                Test Cases (<span id="totalTestsTitle">0</span> total)
-            </h2>
-
-            <!-- Enhanced Filters -->
-            <div class="filters hidden-when-empty" style="display: none;">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-list"></i> All Tests (<span id="allTestsCount">0</span>)
-                </button>
-                <button class="filter-btn" data-filter="passed">
-                    <i class="fas fa-check-circle"></i> Passed (<span id="passedCount">0</span>)
-                </button>
-                <button class="filter-btn" data-filter="failed">
-                    <i class="fas fa-times-circle"></i> Failed (<span id="failedCount">0</span>)
-                </button>
-                <button class="filter-btn" data-filter="skipped">
-                    <i class="fas fa-clock"></i> Skipped (<span id="skippedCount">0</span>)
-                </button>
-                <button class="filter-btn" data-filter="critical">
-                    <i class="fas fa-exclamation-triangle"></i> Critical (<span id="criticalCount">0</span>)
-                </button>
-                <button class="filter-btn" data-filter="create">
-                    <i class="fas fa-plus-circle"></i> CREATE
-                </button>
-                <button class="filter-btn" data-filter="read">
-                    <i class="fas fa-eye"></i> READ
-                </button>
-                <button class="filter-btn" data-filter="update">
-                    <i class="fas fa-edit"></i> UPDATE
-                </button>
-                <button class="filter-btn" data-filter="delete">
-                    <i class="fas fa-trash-alt"></i> DELETE
-                </button>
-                <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search test cases...">
-            </div>
-
-            <button class="toggle-all hidden-when-empty" id="toggleAllBtn" style="display: none;">
-                <i class="fas fa-expand-alt"></i> Expand All Test Details
-            </button>
-
-            <div class="test-cases-container" id="test-cases-container">
-                <!-- Test cases will be rendered here -->
-            </div>
-
-            <!-- Enhanced Test Data Section -->
-            <h2 class="section-title"><i class="fas fa-database"></i> Test Data</h2>
-            <div class="card">
-                <div class="api-info-grid">
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-database"></i> Test Data Source
+            <!-- Modern Test Data Section -->
+            <div class="test-data-section" id="data">
+                <div class="section-header">
+                    <h2><i class="fas fa-database"></i> Test Data</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="data-grid glass-card">
+                    <div class="data-item">
+                        <div class="data-icon">
+                            <i class="fas fa-database"></i>
                         </div>
-                        <div class="api-info-value" id="testDataSource">Not Configured</div>
+                        <div class="data-content">
+                            <h4>Test Data Source</h4>
+                            <div class="data-value" id="testDataSource">Not Configured</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-file-csv"></i> Data Format
+                    <div class="data-item">
+                        <div class="data-icon">
+                            <i class="fas fa-file-csv"></i>
                         </div>
-                        <div class="api-info-value" id="dataFormat">JSON</div>
+                        <div class="data-content">
+                            <h4>Data Format</h4>
+                            <div class="data-value" id="dataFormat">JSON</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-hashtag"></i> Test Data Records
+                    <div class="data-item">
+                        <div class="data-icon">
+                            <i class="fas fa-hashtag"></i>
                         </div>
-                        <div class="api-info-value" id="dataRecords">0</div>
+                        <div class="data-content">
+                            <h4>Test Data Records</h4>
+                            <div class="data-value" id="dataRecords">0</div>
+                        </div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-history"></i> Last Data Update
+                    <div class="data-item">
+                        <div class="data-icon">
+                            <i class="fas fa-history"></i>
                         </div>
-                        <div class="api-info-value" id="dataUpdateDate">Not Updated</div>
+                        <div class="data-content">
+                            <h4>Last Data Update</h4>
+                            <div class="data-value" id="dataUpdateDate">Not Updated</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Critical Issues Section -->
-            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Critical Issues Summary</h2>
-            <div class="security-vulnerabilities">
-                <ul id="criticalIssuesList" style="list-style: none; padding: 0;">
-                    <li
-                        style="padding: 1rem; background: #f8d7da; border-left: 4px solid #dc3545; margin-bottom: 0.5rem; border-radius: 4px;">
-                        <i class="fas fa-info-circle"></i> No critical issues identified
-                    </li>
-                </ul>
+            <!-- Modern Critical Issues Section -->
+            <div class="critical-issues-section" id="critical-issues">
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Critical Issues Summary</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="issues-container glass-card">
+                    <div class="issue-alert">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="issue-content">
+                            <h4>No Critical Issues</h4>
+                            <p>No critical issues have been identified in the current test run.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Enhanced QA Conclusion -->
-            <div class="conclusion">
-                <h2><i class="fas fa-clipboard-check"></i> QA Conclusion</h2>
-
-                <div class="verdict" id="apiStabilityVerdict">
-                    <i class="fas fa-question-circle"></i> API STABILITY: Not Assessed
+            <!-- Modern QA Conclusion - Enhanced UI -->
+            <div class="conclusion-section glass-section" id="qa-verdict">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Quality Assessment</h2>
+                    <div class="section-line"></div>
                 </div>
 
-                <h3 style="color: var(--primary-color); margin: 1.5rem 0;">
-                    <i class="fas fa-rocket"></i> Release Readiness:
-                    <span id="releaseReadiness" style="color: var(--danger-color);">Not Determined</span>
-                </h3>
+                <div class="verdict-container">
+                    <div class="verdict-card">
+                        <div class="verdict-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="verdict-content">
+                            <h3>API STABILITY</h3>
+                            <div class="verdict-value" id="apiStabilityVerdict">Not Assessed</div>
+                            <div class="verdict-description" id="stabilityDescription">
+                                Overall system reliability and consistency
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="conclusion-grid" id="conclusionGrid">
-                    <div class="conclusion-card info">
-                        <h4><i class="fas fa-info-circle"></i> Report Status</h4>
-                        <p>This is a generic API test report template. No specific testing data has been loaded.</p>
+                    <div class="verdict-card">
+                        <div class="verdict-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="verdict-content">
+                            <h3>Release Readiness</h3>
+                            <div class="verdict-value" id="releaseReadiness">Not Determined</div>
+                            <div class="verdict-description" id="readinessDescription">
+                                Assessment of production deployment suitability
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verdict-card">
+                        <div class="verdict-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="verdict-content">
+                            <h3>Success Rate</h3>
+                            <div class="verdict-value" id="successRateVerdict">0%</div>
+                            <div class="verdict-description">
+                                Percentage of passed test cases
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Critical Issues Summary -->
+                <div class="critical-summary-section">
+                    <div class="summary-header">
+                        <i class="fas fa-fire"></i>
+                        <h3>Critical Issues Summary</h3>
+                        <span class="badge critical" id="criticalCountBadge">0</span>
+                    </div>
+                    <div class="critical-content glass-card" id="criticalIssuesSummary">
+                        <div class="no-issues">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>No Critical Issues Detected</h4>
+                                <p>The system appears stable based on available test data.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Enhanced Recommendations -->
-                <div style="margin: 2rem 0;">
-                    <h4><i class="fas fa-list-check"></i> Backend Recommendations:</h4>
-                    <ol id="backendRecommendations" style="padding-left: 1.5rem;">
-                        <li>Populate this report with actual test results</li>
-                        <li>Review API documentation for completeness</li>
-                    </ol>
-                </div>
-
-                <!-- Enhanced Critical Issues Summary -->
-                <div
-                    style="margin: 2rem 0; padding: 1.5rem; background: #fff5f5; border-radius: 12px; border-left: 4px solid var(--danger-color);">
-                    <h4 style="color: var(--danger-color); margin-top: 0;">
-                        <i class="fas fa-fire"></i> 🚨 Critical Issues Summary
-                    </h4>
-                    <div id="criticalIssuesSummary" style="line-height: 1.6;">
-                        No critical issues have been reported. The system appears stable based on available data.
+                <div class="recommendations-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-list-check"></i> Backend Recommendations</h3>
+                        <div class="section-line"></div>
                     </div>
-                </div>
-
-                <p
-                    style="font-style: italic; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border-color); color: var(--text-secondary);">
-                    <i class="fas fa-robot"></i> Report generated by Enterprise QA Automation System on
-                    <span id="generationDate">[GENERATION_DATE]</span>
-                </p>
-            </div>
-
-            <!-- Enhanced Recommendations -->
-            <h2 class="section-title"><i class="fas fa-tasks"></i> Recommendations</h2>
-            <div class="recommendations-grid">
-                <div class="recommendation-card" style="border-top-color: var(--danger-color);">
-                    <h3><i class="fas fa-exclamation-circle"></i> Immediate Actions</h3>
-                    <ul id="immediateActions">
-                        <li>Load test results into this report</li>
-                        <li>Validate API endpoint configurations</li>
-                    </ul>
-                </div>
-                <div class="recommendation-card" style="border-top-color: var(--warning-color);">
-                    <h3><i class="fas fa-clock"></i> Short-term Actions</h3>
-                    <ul id="shortTermActions">
-                        <li>Establish automated testing pipeline</li>
-                        <li>Define comprehensive test coverage</li>
-                    </ul>
-                </div>
-                <div class="recommendation-card" style="border-top-color: var(--info-color);">
-                    <h3><i class="fas fa-calendar-alt"></i> Long-term Actions</h3>
-                    <ul id="longTermActions">
-                        <li>Implement continuous monitoring</li>
-                        <li>Establish performance benchmarks</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Enhanced Security Assessment -->
-            <h2 class="section-title"><i class="fas fa-shield-alt"></i> Security Assessment</h2>
-            <div class="api-info-grid">
-                <div class="api-info-item" style="background: #fee2e2;">
-                    <div style="font-weight: bold; color: #7c2d12;">
-                        <i class="fas fa-database"></i> SQL Injection
-                    </div>
-                    <div id="sqlInjectionAssessment" style="font-weight: 600;">Not Tested</div>
-                </div>
-                <div class="api-info-item" style="background: #fee2e2;">
-                    <div style="font-weight: bold; color: #dc2626;">
-                        <i class="fas fa-key"></i> Authentication
-                    </div>
-                    <div id="authenticationAssessment" style="font-weight: 600;">Not Tested</div>
-                </div>
-                <div class="api-info-item" style="background: #fee2e2;">
-                    <div style="font-weight: bold; color: #dc2626;">
-                        <i class="fas fa-user-shield"></i> Authorization
-                    </div>
-                    <div id="authorizationAssessment" style="font-weight: 600;">Not Tested</div>
-                </div>
-                <div class="api-info-item" style="background: #fef3c7;">
-                    <div style="font-weight: bold; color: #f59e0b;">
-                        <i class="fas fa-check-circle"></i> Input Validation
-                    </div>
-                    <div id="validationAssessment" style="font-weight: 600;">Not Tested</div>
-                </div>
-            </div>
-
-            <!-- Enhanced Test Environment -->
-            <h2 class="section-title"><i class="fas fa-vial"></i> Test Environment Details</h2>
-            <div class="card">
-                <div class="api-info-grid">
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-robot"></i> Automation Setup
+                    <div class="recommendations-grid" id="backendRecommendationsGrid">
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Populate Test Results</h4>
+                                <p>Add actual test data to report-data.js file</p>
+                            </div>
                         </div>
-                        <div class="api-info-value" id="automationSetup">Not Configured</div>
-                    </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-check-double"></i> Assertions
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Review API Documentation</h4>
+                                <p>Verify endpoint specifications and response formats</p>
+                            </div>
                         </div>
-                        <div class="api-info-value" id="assertionsCount">0</div>
-                    </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-chart-pie"></i> Coverage
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Automation Setup</h4>
+                                <p>Configure automated testing pipeline</p>
+                            </div>
                         </div>
-                        <div class="api-info-value" id="coveragePercent">0%</div>
                     </div>
-                    <div class="api-info-item">
-                        <div class="api-info-label">
-                            <i class="fas fa-database"></i> Test Data
+                </div>
+
+                <div class="report-footer">
+                    <div class="footer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-robot"></i>
+                            <span>Generated by Enterprise QA Automation System</span>
                         </div>
-                        <div class="api-info-value" id="testDataInfo">Not Available</div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Date: <span id="generationDate">[GENERATION_DATE]</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Export Buttons Section -->
-            <div class="buttons-container">
-                <button class="export-btn" id="export-report">
-                    <i class="fas fa-download"></i> Export Bug Report
-                </button>
-                <button class="export-btn" id="export-test-cases">
-                    <i class="fas fa-file-export"></i> Export Test Cases
-                </button>
-                <button class="export-btn" id="export-full-report">
-                    <i class="fas fa-file-alt"></i> Export Full Report
-                </button>
+            <!-- Modern Recommendations Section -->
+            <div class="recommendations-grid-section" id="recommendations">
+                <div class="section-header">
+                    <h2><i class="fas fa-tasks"></i> Action Items</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="recommendations-grid">
+                    <div class="recommendation-card immediate">
+                        <div class="recommendation-header">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <h3>Immediate Actions</h3>
+                        </div>
+                        <ul id="immediateActions">
+                            <li><i class="fas fa-circle"></i> Load test results into this report</li>
+                            <li><i class="fas fa-circle"></i> Validate API endpoint configurations</li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-card short-term">
+                        <div class="recommendation-header">
+                            <i class="fas fa-clock"></i>
+                            <h3>Short-term Actions</h3>
+                        </div>
+                        <ul id="shortTermActions">
+                            <li><i class="fas fa-circle"></i> Establish automated testing pipeline</li>
+                            <li><i class="fas fa-circle"></i> Define comprehensive test coverage</li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-card long-term">
+                        <div class="recommendation-header">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Long-term Actions</h3>
+                        </div>
+                        <ul id="longTermActions">
+                            <li><i class="fas fa-circle"></i> Implement continuous monitoring</li>
+                            <li><i class="fas fa-circle"></i> Establish performance benchmarks</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <footer>
-                <p>
-                    <i class="fas fa-user-tie"></i> Generated by: Hossam Mohamed |
-                    <i class="fas fa-clock"></i> Last Updated: <span id="lastUpdated">[LAST_UPDATED]</span>
-                </p>
-                <p><i class="fas fa-robot"></i> This report is generated automatically from test execution results.</p>
+            <!-- Modern Security Assessment -->
+            <div class="security-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-shield-alt"></i> Security Assessment</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="security-grid">
+                    <div class="security-card critical">
+                        <div class="security-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="security-content">
+                            <h4>SQL Injection</h4>
+                            <div class="security-value" id="sqlInjectionAssessment">Not Tested</div>
+                        </div>
+                    </div>
+                    <div class="security-card critical">
+                        <div class="security-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="security-content">
+                            <h4>Authentication</h4>
+                            <div class="security-value" id="authenticationAssessment">Not Tested</div>
+                        </div>
+                    </div>
+                    <div class="security-card critical">
+                        <div class="security-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="security-content">
+                            <h4>Authorization</h4>
+                            <div class="security-value" id="authorizationAssessment">Not Tested</div>
+                        </div>
+                    </div>
+                    <div class="security-card warning">
+                        <div class="security-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="security-content">
+                            <h4>Input Validation</h4>
+                            <div class="security-value" id="validationAssessment">Not Tested</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Test Environment -->
+            <div class="environment-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-vial"></i> Test Environment Details</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="environment-grid glass-card">
+                    <div class="env-item">
+                        <div class="env-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="env-content">
+                            <h4>Automation Setup</h4>
+                            <div class="env-value" id="automationSetup">Not Configured</div>
+                        </div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="env-content">
+                            <h4>Assertions</h4>
+                            <div class="env-value" id="assertionsCount">0</div>
+                        </div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="env-content">
+                            <h4>Coverage</h4>
+                            <div class="env-value" id="coveragePercent">0%</div>
+                        </div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="env-content">
+                            <h4>Test Data</h4>
+                            <div class="env-value" id="testDataInfo">Not Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Export Buttons -->
+            <div class="export-section">
+                <div class="buttons-container glass-card">
+                    <button class="export-btn danger" id="export-report">
+                        <i class="fas fa-download"></i>
+                        <span>Export Bug Report</span>
+                    </button>
+                    <button class="export-btn primary" id="export-test-cases">
+                        <i class="fas fa-file-export"></i>
+                        <span>Export Test Cases</span>
+                    </button>
+                    <button class="export-btn secondary" id="export-full-report">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Export Full Report</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modern Footer -->
+            <footer class="glass-footer">
+                <div class="footer-content">
+                    <div class="footer-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Generated by: Hossam Mohamed</span>
+                    </div>
+                    <div class="footer-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Last Updated: <span id="lastUpdated">[LAST_UPDATED]</span></span>
+                    </div>
+                    <div class="footer-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Automatically generated from test execution results</span>
+                    </div>
+                </div>
             </footer>
-
-            <!-- Print Button Container -->
-            <div class="print-button-container">
-                <button class="print-btn" id="printBtn">
-                    <i class="fas fa-print"></i> Print Report
-                </button>
-            </div>
         </div>
     </div>
 
     <!-- Enhanced Modal -->
-    <div class="modal" id="details-modal" style="display: none;">
-        <div class="modal-content">
+    <div class="modern-modal" id="details-modal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-card">
             <div class="modal-header">
                 <h2 id="modal-title">Test Case Details</h2>
-                <button class="close-btn" id="close-modal">×</button>
+                <button class="close-btn" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="modal-body" id="modal-body">
                 <!-- Modal content will be populated by JavaScript -->
@@ -478,6 +877,10 @@
         - Works even with empty test data
         - Dashboard can read immediately after page load
     -->
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 
 </html>

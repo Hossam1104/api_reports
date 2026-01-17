@@ -15,14 +15,16 @@ window.REPORT_DATA = {
     // ======================
     meta: {
         // REQUIRED: API Information
-        apiName: "Item Sub-Categories API",
-        folderName: "catalog",  // The api folder name
+        apiName: "Item Sub-Categories",
+        folderName: "Item Sub-Categories",  // The api folder name
         isTemplate: false, // Set to true if this is a template
         baseUrl: "https://admin-backend.gazzertest.cloud/api",
         environment: "Production",
         authentication: "Bearer Token",
         executedBy: "Hossam Mohamed",
-        executedByTitle: "Senior Software QA Engineer",
+        executedByTitle: "Software QA Engineer",
+        createdOn: "2026-01-16",
+        lastModifiedOn: "2026-01-16",
         createdAt: new Date().toISOString(),
 
         // OPTIONAL: Test Environment Details

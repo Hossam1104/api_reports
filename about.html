@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description | Gazzer App API Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Brand Colors - Blue & Teal to match Logo */
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #1abc9c;
+
+            /* Status Colors */
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #3498db;
+
+            /* Backgrounds */
+            --light-bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(52, 152, 219, 0.15);
+
+            /* Shadows */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+            /* Text Colors */
+            --border-color: rgba(148, 163, 184, 0.4);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #3498db 0%, #1abc9c 100%);
+            --gradient-secondary: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%);
+            --gradient-accent: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+
+            --font-family: 'Cairo', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(26, 188, 156, 0.05) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .layout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.25rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--card-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-icon img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .back-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--light-bg);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Documentation Content */
+        .docs-container {
+            padding: 3rem 0;
+        }
+
+        .docs-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .docs-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .docs-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-accent);
+            border-radius: 3px;
+        }
+
+        .docs-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Documentation Sections */
+        .docs-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--glass-border);
+            border-left: 5px solid var(--secondary-color);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .docs-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            background: rgba(26, 188, 156, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .content-card h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 i {
+            color: var(--primary-color);
+        }
+
+        .content-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content-card li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .content-card strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-top: 4px solid var(--primary-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1e293b;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #334155;
+        }
+
+        .code-block code {
+            color: #2dd4bf;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+        }
+
+        /* Structure Tree */
+        .structure-tree {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--border-color);
+            font-family: 'Courier New', monospace;
+            color: var(--text-primary);
+        }
+
+        .tree-item {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-logo {
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .logo {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .docs-header h1 {
+                font-size: 2rem;
+            }
+
+            .docs-section {
+                padding: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="layout-container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="./Assets/Logo.png" alt="Gazzer Logo" width="40" height="40">
+                </div>
+                <div class="logo-text">
+                    <h1>Gazzer App API Documentation</h1>
+                    <p>Configuration & User Guide</p>
+                </div>
+            </div>
+            <a href="./index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <!-- Documentation Content -->
+    <div class="docs-container">
+        <div class="layout-container">
+            <div class="docs-header">
+                <h1>Gazzer App API Dashboard Documentation</h1>
+                <p>Complete guide to setting up, using, and extending the API testing dashboard</p>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    <h2>🚀 Overview</h2>
+                </div>
+                <div class="content-card">
+                    <p>The Gazzer App API Testing Dashboard is a lightweight, browser-based reporting system that
+                        aggregates
+                        API testing results across multiple backend services into one unified view.</p>
+                    <p>It enables teams to:</p>
+                    <ul>
+                        <li>📈 Track testing progress</li>
+                        <li>🧪 Review execution results</li>
+                        <li>🐞 Analyze failures</li>
+                        <li>📂 Navigate API reports effortlessly</li>
+                    </ul>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-server"></i>
+                            <h4>No Backend</h4>
+                            <p>Runs completely in the browser with no server requirements</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-database"></i>
+                            <h4>No Database</h4>
+                            <p>Uses static files for all data storage and reporting</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-cogs"></i>
+                            <h4>No Build Step</h4>
+                            <p>Works directly in any modern browser without compilation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-star"></i>
+                    <h2>✨ Key Features</h2>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-chart-bar"></i> Unified Dashboard</h3>
+                    <ul>
+                        <li>Total APIs tested</li>
+                        <li>Total test cases</li>
+                        <li>Average success rate</li>
+                        <li>Failed test count</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-folder-open"></i> Automatic Report Discovery</h3>
+                    <p>Detects API reports by folder structure. No manual configuration required.</p>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-file-alt"></i> Detailed API Reports</h3>
+                    <ul>
+                        <li>Individual test cases</li>
+                        <li>Requests & responses</li>
+                        <li>Status, severity, and priority</li>
+                        <li>Bug root cause & fix notes</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-search"></i> Filtering & Search</h3>
+                    <p>Filter by status and search by test name or endpoint.</p>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    <h2>🧩 How It Works</h2>
+                </div>
+                <div class="content-card">
+                    <p>The dashboard is data-driven. Each API has its own folder that contains:</p>
+                    <ul>
+                        <li>A static report page (index.html)</li>
+                        <li>A JavaScript file with test execution data (report-data.js)</li>
+                    </ul>
+                    <p>The dashboard:</p>
+                    <ol>
+                        <li>🔍 Scans predefined folders</li>
+                        <li>📥 Loads report data</li>
+                        <li>🧮 Calculates statistics</li>
+                        <li>📊 Renders dashboards automatically</li>
+                    </ol>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-folder-tree"></i> Project Structure</h3>
+                    <div class="structure-tree">
+                        <div>/dashboard-root</div>
+                        <div class="tree-item">│</div>
+                        <div class="tree-item">├── index.html # 🏠 Main dashboard entry</div>
+                        <div class="tree-item">├── styles.css # 🎨 Dashboard styling</div>
+                        <div class="tree-item">├── script.js # ⚙️ Dashboard logic</div>
+                        <div class="tree-item">│</div>
+                        <div class="tree-item">├── Authentication/ # 🔐 Authentication API report</div>
+                        <div class="tree-item">│ ├── index.html</div>
+                        <div class="tree-item">│ └── report-data.js</div>
+                        <div class="tree-item">│</div>
+                        <div class="tree-item">├── Generic Items/ # 📦 Generic Items API report</div>
+                        <div class="tree-item">│ ├── index.html</div>
+                        <div class="tree-item">│ └── report-data.js</div>
+                        <div class="tree-item">│</div>
+                        <div class="tree-item">├── report_template/ # 🧩 Reusable report template</div>
+                        <div class="tree-item">│ ├── index.html</div>
+                        <div class="tree-item">│ └── report-data.js</div>
+                        <div class="tree-item">│</div>
+                        <div class="tree-item">└── README.md # 📘 Project documentation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Run Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    <h2>▶️ How to Run the Dashboard</h2>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-laptop"></i> Option 1: Open Locally (Recommended)</h3>
+                    <ol>
+                        <li>📥 Clone or download the project</li>
+                        <li>🌐 Open index.html in Chrome or Edge</li>
+                        <li>🔄 Click "Scan for Reports"</li>
+                        <li>✔ No setup required</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Add New API Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    <h2>➕ How to Add a New API Report</h2>
+                </div>
+                <div class="content-card">
+                    <p>Adding a new API report is simple and safe:</p>
+                    <h3><i class="fas fa-copy"></i> ① Copy the Template</h3>
+                    <div class="code-block">
+                        <span class="comment"># Copy the template folder</span><br>
+                        cp -r report_template <span style="color: #f39c12;">NewAPI</span>
+                    </div>
+                    <h3><i class="fas fa-folder"></i> ② Rename the Folder</h3>
+                    <p>The folder name represents the API name (e.g., <code>Orders/</code>, <code>Users/</code>, etc.)
+                    </p>
+                    <h3><i class="fas fa-edit"></i> ③ Update Report Data</h3>
+                    <p>Edit: <code>NewAPI/report-data.js</code></p>
+                    <p>Fill in:</p>
+                    <ul>
+                        <li>🧾 API metadata</li>
+                        <li>🧪 Test cases</li>
+                        <li>📊 Execution results</li>
+                    </ul>
+                    <h3><i class="fas fa-search"></i> ④ Scan for Reports</h3>
+                    <p>Open the dashboard and click: 🔄 <strong>Scan for Reports</strong></p>
+                    <p>Your new API report will appear automatically.</p>
+                </div>
+            </div>
+
+            <!-- Important Notes Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>⚠️ Important Notes</h2>
+                </div>
+                <div class="content-card">
+                    <ul>
+                        <li>🚫 Template reports are excluded from statistics</li>
+                        <li>📁 Folder names must match report metadata</li>
+                        <li>📊 Dashboard is read-only</li>
+                        <li>🧠 Data is trusted as-is</li>
+                        <li>🔄 Refresh anytime using the admin panel</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>🔐 Security & Privacy</h2>
+                </div>
+                <div class="content-card">
+                    <ul>
+                        <li>🔒 No credentials are executed</li>
+                        <li>🪪 Tokens shown are informational only</li>
+                        <li>🌐 No API calls are made</li>
+                        <li>✅ Safe for internal sharing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-users"></i>
+                    <h2>🧪 Who Is This For?</h2>
+                </div>
+                <div class="content-card">
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-user-tie"></i>
+                            <h4>QA Engineers</h4>
+                            <p>Monitor and analyze test results</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-robot"></i>
+                            <h4>Automation Engineers</h4>
+                            <p>Track automated test execution</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-code"></i>
+                            <h4>Backend Developers</h4>
+                            <p>Validate API responses and performance</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Tech Leads</h4>
+                            <p>Monitor team progress and quality metrics</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h4>Product Owners</h4>
+                            <p>Track feature readiness and quality</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-user-check"></i>
+                            <h4>Auditors & Managers</h4>
+                            <p>Review compliance and quality reports</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintainer Section -->
+            <div class="docs-section">
+                <div class="section-title">
+                    <i class="fas fa-user-cog"></i>
+                    <h2>🧑‍💼 Maintained By</h2>
+                </div>
+                <div class="content-card">
+                    <h3><i class="fas fa-user"></i> Hossam Mohamed</h3>
+                    <p><strong>Software QA Engineer</strong></p>
+                    <p>Specializing in API testing automation, quality assurance strategies, and developer tooling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="layout-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Gazzer App Company</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="./index.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="./report_template/index.html" target="_blank"><i class="fas fa-file-alt"></i> Template</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gazzer API Testing Dashboard. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -8,20 +8,21 @@ Act as a Principal Automation Quality Engineer, generating REAL API testing data
 
 SECTION 2 — API UNDER TEST (SOURCE OF TRUTH)
 
-- API name : (Item Categories)
+- API name : (Provinces)
 - Base URL: "https://admin-backend.gazzertest.cloud/api"
 
 - endpoints:
-    Get All Categories (Admin) (GET): /catalog/item-categories
-    Get Category by ID (Admin) (GET): /catalog/item-categories/{id}
-    Get Categories by Store Category (Admin) (GET): /catalog/item-categories/store-category/{id}
-    Create Category (POST): //catalog/item-categories
-    Update Category (PUT / PATCH): /catalog/item-categories/{id}
-    Delete Category (DELETE): /catalog/item-categories/{id}
+    Get All Provinces (Public) (GET): /provinces
+    Get All Provinces (Admin) (GET): /provinces
+    Get Province by ID (Admin) (GET): /provinces/{province_id}
+    Create Province (POST): /provinces
+    Update Province (PUT / PATCH): /provinces/{province_id}
+    Delete Province (DELETE): /provinces/{province_id}
+    Create Province (POST): /provinces/{province_id}/toggle-status
 
 
 - Authentication details (token / header): Bearer Token:
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODUxNzU0NSwiZXhwIjoxNzY4ODA1NTQ1LCJuYmYiOjE3Njg1MTc1NDUsImp0aSI6IkNBNDAyUHNSdXF3RXZIV3oiLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.zu63xqQd8gNfjbKZV8LU1Ytg9C-ODd6iiD6EjoAjK4A
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODYwMjk4NywiZXhwIjoxNzY4ODkwOTg3LCJuYmYiOjE3Njg2MDI5ODcsImp0aSI6Ik82QzFGaDgyN0V0ZnJtR28iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.KLZzsfJcLJTrM0qEl9UQnaqwg4nOTsH4vMChzjTbMiA
 
 
 SECTION 3 — FILES PROVIDED
@@ -81,7 +82,7 @@ window.REPORT_DATA = {
 
 SECTION 6 — TEST CASE RULES
 
-Generate ~100 test cases (≤150)
+Generate  around 150 test cases (≤200)
 
 Use ONLY the provided endpoints.
 
@@ -109,7 +110,7 @@ SECTION 8 — OUTPUT RULE (FINAL)
 
 🚫 Output ONLY:
 
-report-data.js
+report-data.js with the 150 test cases or more.
 
 The file MUST:
 
@@ -117,6 +118,11 @@ Run immediately
 
 Populate the report
 
-Appear in the dashboard after the scan.
+It appears in the dashboard after the scan.
+
+I want all test cases available to be written in the file.
+ Do not tell me:   
+// ... Additional test cases would follow this pattern
+// Each covering specific scenarios, edge cases, and requirements
 
 🔚 END OF PROMPT

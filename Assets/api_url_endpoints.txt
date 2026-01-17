@@ -1,0 +1,105 @@
+- API name : (Authentication)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+Endpoints:
+Login (POST): /auth/login
+Logout (POST): /auth/logout
+current_user(GET): /auth/me
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Banners)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Banners (GET): /banners
+    Get Banner By ID (GET): /banners/{id}
+    Create Banner (POST): /banners
+    Update Banner (PUT / PATCH): /banners/{id}
+    Delete Banner (DELETE): /banners/{id}
+    Get Banner Statistics (GET): /banners/statistics/overview
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Generic Items)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Items (Admin) (GET): /catalog/items
+    Get Item by ID (Admin) (GET): /catalog/items/{id}
+    Create Item (POST): /catalog/items
+    Update Item (PUT / PATCH): /catalog/items/{id}
+    Delete Item (DELETE): /catalog/items/{id}
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Item Categories)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Categories (Admin) (GET): /catalog/item-categories
+    Get Category by ID (Admin) (GET): /catalog/item-categories/{category_id}
+    Get Categories by Store Category (Admin) (GET): /catalog/item-categories/store-category/{store_category_id}
+    Create Category (POST): /catalog/item-categories
+    Update Category (PUT / PATCH): /catalog/item-categories/{category_id}
+    Delete Category (DELETE): /catalog/item-categories/{category_id}
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Item Sub-Categories)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Sub-Categories (Admin) (GET): /catalog/item-sub-categories
+    Get Sub-Category by ID (Admin) (GET): /catalog/item-sub-categories/{sub_category_id}
+    Get Sub-Categories by Store Category (GET): /catalog/item-sub-categories/store-category/{store_category_id}
+    Create Sub-Category (POST): /catalog/item-sub-categories
+    Update Sub-Category (PUT / PATCH): /catalog/item-sub-categories/{sub_category_id}
+    Delete Sub-Category (DELETE): /catalog/item-sub-categories/{sub_category_id}
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Item Sub-Categories)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Sub-Categories (Admin) (GET): /catalog/item-sub-categories
+    Get Sub-Category by ID (Admin) (GET): /catalog/item-sub-categories/{sub_category_id}
+    Get Sub-Categories by Store Category (GET): /catalog/item-sub-categories/store-category/{store_category_id}
+    Create Sub-Category (POST): /catalog/item-sub-categories
+    Update Sub-Category (PUT / PATCH): /catalog/item-sub-categories/{sub_category_id}
+    Delete Sub-Category (DELETE): /catalog/item-sub-categories/{sub_category_id}
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODU2MTY3OCwiZXhwIjoxNzY4ODQ5Njc4LCJuYmYiOjE3Njg1NjE2NzgsImp0aSI6ImN5QmRjRE9GRGtKWnVZQ24iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.h12ufVZaLD7MRYZzDcHMY1ExvNJA-UN7zzlyfA_R8I0
+
+---------------------------------------------------------------------------------------------------------------------------------------
+- API name : (Provinces)
+- Base URL: "https://admin-backend.gazzertest.cloud/api"
+
+- endpoints:
+    Get All Provinces (Public) (GET): /provinces
+    Get All Provinces (Admin) (GET): /provinces
+    Get Province by ID (Admin) (GET): /provinces/{province_id}
+    Create Province (POST): /provinces
+    Update Province (PUT / PATCH): /provinces/{province_id}
+    Delete Province (DELETE): /provinces/{province_id}
+    Create Province (POST): /provinces/{province_id}/toggle-status
+
+
+- Authentication details (token / header): Bearer Token:
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWluLWJhY2tlbmQuZ2F6emVydGVzdC5jbG91ZC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc2ODYwMjk4NywiZXhwIjoxNzY4ODkwOTg3LCJuYmYiOjE3Njg2MDI5ODcsImp0aSI6Ik82QzFGaDgyN0V0ZnJtR28iLCJzdWIiOiIxIiwicHJ2IjoiZjFkMzRhYmQ0MjQ3MzUzODIxMjM2YjQ4MTg5NzJhODUyODQzODNiNyJ9.KLZzsfJcLJTrM0qEl9UQnaqwg4nOTsH4vMChzjTbMiA

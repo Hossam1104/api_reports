@@ -15,15 +15,17 @@ window.REPORT_DATA = {
     // ======================
     meta: {
         // REQUIRED: API Information
-        apiName: "Admin Management API",
+        apiName: "Admin Management",
         folderName: "folderName",  //The api folder name
         isTemplate: true, //Set to true if this is a template
         baseUrl: "http://localhost:8000/api",
         environment: "Development",
         authentication: "Bearer Token",
         executedBy: "Hossam Mohamed",
-        executedByTitle: "Senior Software QA Engineer",
-        createdAt: new Date().toISOString(),
+        executedByTitle: "Software QA Engineer",
+        createdOn: "2026-01-16",
+        lastModifiedOn: "2026-01-16",
+        createdAt: "2026-01-16T10:30:00Z",
 
         // OPTIONAL: Test Environment Details
         automationSetup: "Manual - Ready for Automation",

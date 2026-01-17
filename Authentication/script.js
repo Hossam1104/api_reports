@@ -394,6 +394,8 @@ function updateConfigElements() {
     document.getElementById('environment').textContent = config.environment;
     document.getElementById('authentication').textContent = config.authentication;
     document.getElementById('testDate').textContent = config.testDate;
+    document.getElementById('createdOn').textContent = config.createdOn;
+    document.getElementById('lastModifiedOn').textContent = config.lastModifiedOn;
     document.getElementById('apiNamePlaceholder').textContent = config.apiName;
     document.getElementById('generationDate').textContent = config.creationDate;
     document.getElementById('lastUpdated').textContent = config.creationDate;
@@ -477,7 +479,9 @@ function renderTestCases() {
     const filteredCases = testCases.filter(testCase => {
         if (currentFilter !== 'all' && currentFilter !== 'create' &&
             currentFilter !== 'read' && currentFilter !== 'update' &&
-            currentFilter !== 'delete' && currentFilter !== 'critical') {
+            currentFilter !== 'delete' && currentFilter !== 'critical' &&
+            currentFilter !== 'high' && currentFilter !== 'medium' &&
+            currentFilter !== 'low') {
             if (testCase.status !== currentFilter) return false;
         }
 
@@ -488,6 +492,18 @@ function renderTestCases() {
 
         if (currentFilter === 'critical') {
             if (testCase.severity !== 'critical') return false;
+        }
+
+        if (currentFilter === 'high') {
+            if (testCase.severity !== 'high') return false;
+        }
+
+        if (currentFilter === 'medium') {
+            if (testCase.severity !== 'medium') return false;
+        }
+
+        if (currentFilter === 'low') {
+            if (testCase.severity !== 'low') return false;
         }
 
         if (searchTerm) {
@@ -545,20 +561,24 @@ function createTestCaseCard(testCase) {
 
     card.innerHTML = `
         <div class="test-case-header" onclick="toggleTestDetails('${testCase.id}')">
-            <div>
-                <h3 style="margin: 0;">
-                    ${testCase.id}: ${testCase.title}
-                    <span class="status-badge ${statusBadgeClass}">${testCase.status.toUpperCase()}</span>
-                    <span class="severity-badge ${severityBadgeClass}">${testCase.severity.toUpperCase()}</span>
-                </h3>
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+            <div style="width: 100%;">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+                    <h3 style="margin: 0; flex: 1; font-size: 1rem; line-height: 1.4;">
+                        <span style="font-weight: 800; color: var(--primary-color);">${testCase.id}:</span> ${testCase.title}
+                    </h3>
+                    <div class="title-badges">
+                        <span class="status-badge ${statusBadgeClass}">${testCase.status.toUpperCase()}</span>
+                        <span class="severity-badge ${severityBadgeClass}">${testCase.severity.toUpperCase()}</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                     <span class="method-badge ${methodBadgeClass}">${testCase.method}</span>
                     <span style="color: var(--text-secondary); font-family: 'Courier New', monospace; font-size: 0.85rem;">${testCase.endpoint}</span>
                 </div>
             </div>
-            <i class="fas fa-chevron-down" id="chevron-${testCase.id}"></i>
+            <i class="fas fa-chevron-down" id="chevron-${testCase.id}" style="margin-top: 4px; margin-left: 8px;"></i>
         </div>
-        <div style="color: var(--text-secondary); margin-bottom: 8px; font-size: 0.9rem;">
+        <div class="test-case-description">
             ${testCase.description}
         </div>
         <div class="test-case-details" id="details-${testCase.id}">
@@ -707,20 +727,23 @@ function createBugCard(bug, index) {
 
     card.innerHTML = `
         <div class="bug-header" onclick="toggleBugDetails(${index})">
-            <div>
-                <div class="bug-title">${bug.testCaseId}: ${bug.title}</div>
-                <div style="display: flex; gap: 8px; margin-top: 4px;">
-                    <span class="severity-badge severity-${bug.severity}">${bug.severity.toUpperCase()}</span>
-                    <span class="bug-priority ${priorityClass}">${bug.priority}</span>
+            <div style="width: 100%;">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+                    <div class="bug-title">
+                        <span style="font-weight: 800; color: var(--danger-color);">${bug.testCaseId}:</span> ${bug.title}
+                    </div>
+                    <div class="bug-badges">
+                        <span class="severity-badge severity-${bug.severity}">${bug.severity.toUpperCase()}</span>
+                        <span class="bug-priority ${priorityClass}">${bug.priority}</span>
+                    </div>
                 </div>
             </div>
-            <i class="fas fa-chevron-down" id="bug-chevron-${index}"></i>
+            <i class="fas fa-chevron-down" id="bug-chevron-${index}" style="margin-top: 4px; margin-left: 8px;"></i>
+        </div>
+        <div class="bug-description">
+            ${bug.bugDetails.actualResult}
         </div>
         <div class="bug-details" id="bug-details-${index}">
-            <div style="margin-bottom: 12px; font-size: 0.9rem;">
-                <strong>Bug Description:</strong><br>
-                ${bug.bugDetails.actualResult}
-            </div>
             <div class="detail-row">
                 <div class="detail-label">Expected Result:</div>
                 <div class="detail-value">${bug.bugDetails.expectedResult}</div>
@@ -1046,12 +1069,18 @@ function updateCounts() {
     const failedCount = testCases.filter(tc => tc.status === 'failed').length;
     const skippedCount = testCases.filter(tc => tc.status === 'skipped').length;
     const criticalCount = testCases.filter(tc => tc.severity === 'critical').length;
+    const highCount = testCases.filter(tc => tc.severity === 'high').length;
+    const mediumCount = testCases.filter(tc => tc.severity === 'medium').length;
+    const lowCount = testCases.filter(tc => tc.severity === 'low').length;
 
     document.getElementById('allTestsCount').textContent = totalCount;
     document.getElementById('passedCount').textContent = passedCount;
     document.getElementById('failedCount').textContent = failedCount;
     document.getElementById('skippedCount').textContent = skippedCount;
     document.getElementById('criticalCount').textContent = criticalCount;
+    if (document.getElementById('highCount')) document.getElementById('highCount').textContent = highCount;
+    if (document.getElementById('mediumCount')) document.getElementById('mediumCount').textContent = mediumCount;
+    if (document.getElementById('lowCount')) document.getElementById('lowCount').textContent = lowCount;
     document.getElementById('totalTestsTitle').textContent = totalCount;
 }
 
@@ -1060,7 +1089,7 @@ function updateEmptyStateVisibility() {
     const hasBugs = testCases.some(tc => tc.bugDetails);
 
     // Handle test case controls
-    const testControls = document.querySelectorAll('.filters, #toggleAllBtn');
+    const testControls = document.querySelectorAll('.filters-section, #toggleAllBtn');
     testControls.forEach(el => {
         if (hasTestCases) {
             el.style.display = '';
@@ -1104,9 +1133,12 @@ window.toggleTestDetails = function (testCaseId) {
     // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
     const details = document.getElementById(`details-${testCaseId}`);
     const chevron = document.getElementById(`chevron-${testCaseId}`);
+    const card = document.getElementById(`test-case-${testCaseId}`);
+
     if (details && chevron) {
         details.classList.toggle('active');
         chevron.style.transform = details.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        if (card) card.classList.toggle('expanded');
     }
 };
 
@@ -1114,9 +1146,12 @@ window.toggleBugDetails = function (bugIndex) {
     // if (IS_TEMPLATE_MODE) return; // Allow toggle even in template mode
     const details = document.getElementById(`bug-details-${bugIndex}`);
     const chevron = document.getElementById(`bug-chevron-${bugIndex}`);
+    const card = document.getElementById(`bug-${bugIndex}`);
+
     if (details && chevron) {
         details.classList.toggle('active');
         chevron.style.transform = details.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        if (card) card.classList.toggle('expanded');
     }
 };
 
@@ -1132,6 +1167,7 @@ function setupEventListeners() {
             allExpanded = !allExpanded;
             const chevrons = document.querySelectorAll('.test-case-header i');
             const details = document.querySelectorAll('.test-case-details');
+            const cards = document.querySelectorAll('.test-case-card');
 
             chevrons.forEach(chevron => {
                 chevron.className = allExpanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
@@ -1142,6 +1178,14 @@ function setupEventListeners() {
                     detail.classList.add('active');
                 } else {
                     detail.classList.remove('active');
+                }
+            });
+
+            cards.forEach(card => {
+                if (allExpanded) {
+                    card.classList.add('expanded');
+                } else {
+                    card.classList.remove('expanded');
                 }
             });
 
@@ -1159,6 +1203,7 @@ function setupEventListeners() {
             allBugsExpanded = !allBugsExpanded;
             const chevrons = document.querySelectorAll('.bug-header i');
             const details = document.querySelectorAll('.bug-details');
+            const cards = document.querySelectorAll('.bug-card');
 
             chevrons.forEach(chevron => {
                 chevron.className = allBugsExpanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
@@ -1169,6 +1214,14 @@ function setupEventListeners() {
                     detail.classList.add('active');
                 } else {
                     detail.classList.remove('active');
+                }
+            });
+
+            cards.forEach(card => {
+                if (allBugsExpanded) {
+                    card.classList.add('expanded');
+                } else {
+                    card.classList.remove('expanded');
                 }
             });
 
@@ -1448,3 +1501,103 @@ setTimeout(() => {
         window.reportInitialized = true;
     }
 }, 2000);
+
+// ============================
+// NAVIGATION & SCROLL LOGIC
+// ============================
+function setupNavigation() {
+    console.log("Setting up navigation...");
+    const navLinks = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.dashboard-section, .api-info-section, .test-cases-section, .bugs-section, .test-data-section, .critical-issues-section, .conclusion-section, .recommendations-grid-section');
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    // Smooth Scrolling with Offset for Sidebar/Header
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                // Determine offset based on screen size (sidebar vs bottom bar)
+                const isMobile = window.innerWidth <= 768;
+                const headerOffset = isMobile ? 80 : 20;
+
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+
+                // Update active state manually
+                navLinks.forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Scroll Spy & Scroll-to-Top Visibility
+    window.addEventListener('scroll', () => {
+        // Scroll Spy
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            // Adjust threshold for better active state switching
+            if (pageYOffset >= (sectionTop - 250)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+
+        // specific check for dashboard at top
+        if (window.pageYOffset < 200) {
+            const dashboardLink = document.querySelector('.nav-item[href="#dashboard"]');
+            if (dashboardLink) dashboardLink.classList.add('active');
+        }
+
+        // Scroll to Top Button Visibility
+        if (scrollToTopBtn) {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        }
+    });
+
+    // Scroll to Top Action
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+}
+
+// Initialize Navigation immediately if DOM is ready, or on load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNavigation);
+} else {
+    setupNavigation();
+}
+// Sidebar Animation Fix
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.classList.add('preload');
+        setTimeout(() => {
+            sidebar.classList.remove('preload');
+        }, 500);
+    }
+});
